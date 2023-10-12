@@ -1,12 +1,23 @@
 import { StyleSheet, Text, View } from 'react-native'
 import React from 'react'
+import { useWindowDimensions } from 'react-native'
+import Header from '../components/Header';
 
 export default function Parcours() {
-  return (
-    <View>
-      <Text>Parcours</Text>
-    </View>
-  )
-}
+    const {height, width, scale, fontScale} = useWindowDimensions();
 
-const styles = StyleSheet.create({})
+    return (
+  
+      <View style={[styles.mainContainer, {minHeight: height}]}>
+  
+          <Header />
+      
+      </View>
+    )
+  }
+
+const styles = StyleSheet.create({
+    mainContainer: {
+      backgroundColor: "#fff"
+    }
+  })

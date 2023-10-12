@@ -1,6 +1,6 @@
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { NavigationContainer } from '@react-navigation/native';
-import { StatusBar } from 'expo-status-bar';
+import { StatusBar } from 'react-native'
 import { SafeAreaView } from 'react-native';
 import { useWindowDimensions } from 'react-native';
 import { StyleSheet, Text, View } from 'react-native';
@@ -10,13 +10,27 @@ import { MaterialCommunityIcons } from '@expo/vector-icons';
 import Parcours from './pages/Parcours';
 import Proshop from './pages/Proshop';
 import Profile from './pages/Profile';
+import { Easing } from 'react-native';
+
+
+export const config = {
+  animation: 'timing',
+  config: {
+    duration: 200,
+    easing: Easing.linear,
+  }
+}
 
 export default function App() {
 
   const Tab = createBottomTabNavigator();
+
   const {height, width, scale, fontScale} = useWindowDimensions();
 
   return (
+
+    <SafeAreaView style={{flex: 1, paddingTop: Platform.OS === "android" ? StatusBar.currentHeight +20 : 0, maxWidth: width}}>
+    
     <NavigationContainer>
 
       <Tab.Navigator screenOptions={{headerShown: false, tabBarStyle: styles.navbar, tabBarActiveTintColor: '#2ba9bc', tabBarInactiveTintColor: 'gray'}}>
@@ -96,6 +110,8 @@ export default function App() {
       </Tab.Navigator>
       
     </NavigationContainer>
+
+    </SafeAreaView>
   );
 }
 
