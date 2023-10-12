@@ -8,10 +8,14 @@ import { FlatList } from 'react-native';
 import { departsList } from '../utils/json/departsList';
 import { LinearGradient } from 'expo-linear-gradient';
 import { TouchableOpacity } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
 
-export default function Home() {
+export default function Home({setPlayers}) {
 
   const {height, width, scale, fontScale} = useWindowDimensions();
+
+  const navigation = useNavigation();
+
 
   return (
 
@@ -73,7 +77,7 @@ export default function Home() {
                       data={departsList}
                       renderItem={({ item }) => 
                       
-                        <TouchableOpacity activeOpacity={.9} style={[styles.event, {width: (320), marginHorizontal: (10)}]} key={item.id}>
+                        <TouchableOpacity onPress={() => (setPlayers(departsList[departsList.indexOf(item)].with), navigation.navigate('DepartSums', {id:departsList.indexOf(item)}))} activeOpacity={.9} style={[styles.event, {width: (320), marginHorizontal: (10)}]} key={item.id}>
                             <Image
                               style={styles.bgEvent}
                               source={item.golfIMG}
