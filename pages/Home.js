@@ -9,12 +9,44 @@ import { departsList } from '../utils/json/departsList';
 import { LinearGradient } from 'expo-linear-gradient';
 import { TouchableOpacity } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
+import { MaterialCommunityIcons } from '@expo/vector-icons';
 
 export default function Home({setPlayers}) {
 
   const {height, width, scale, fontScale} = useWindowDimensions();
 
   const navigation = useNavigation();
+
+  const slides = [
+    {
+      id: 0,
+      title: 'Parcours',
+      img: "golf",
+      link: 'DepartResa',
+      desc: 'Réserver un départ'
+    },
+    {
+      id: 1,
+      title: 'Cours',
+      img: "golf-cart",
+      link: 'CoursResa',
+      desc: 'Prendre un cours'
+    },
+    {
+      id: 2,
+      title: 'Practice',
+      img: "golf-tee",
+      link: 'PracticeResa',
+      desc: 'Recharge de practice'
+    },
+    {
+      id: 3,
+      title: 'Compétition',
+      img: "medal",
+      link: 'CompetResa',
+      desc: 'Inscription competition'
+    },
+  ]
 
 
   return (
@@ -104,6 +136,29 @@ export default function Home({setPlayers}) {
                         />
 
               </View>
+
+          </View>
+
+
+          <Text style={[styles.bold, { marginTop: 35, marginBottom: 20}]}>Réserver un évènement</Text>
+
+
+          <View style={styles.book}>
+
+              {slides.map((item) => {
+
+                  return (
+                  <View key={item.id} style={ [styles.bookingCard] } distance={15} >
+                      <TouchableOpacity style={ [styles.bookingCardInside] } onPress={() => navigation.navigate(item.link)}>
+
+                          <MaterialCommunityIcons style={styles.Icon} name={item.img} />
+
+                          <Text style={[styles.center]}>{item.title}</Text>
+                        
+                      </TouchableOpacity>
+                  </View>
+                  )
+                  })}
 
           </View>
 
@@ -231,5 +286,55 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     color: "#fff"
   },
+
+
+
+  book: {
+    width: '100%',
+    display: "flex",
+    justifyContent: 'center',
+    alignContent: 'center',
+    flexDirection: 'row',
+    flexWrap: "wrap",
+    columnGap: 30,
+    rowGap: 15
+  },
+  bookingCard:{
+    width: 160,
+    height: 120,
+    borderRadius: 10,
+    borderWidth: 5,
+    borderColor: '#fbf9fb',
+    display: "flex",
+    justifyContent: 'center',
+    alignContent: 'center',
+    backgroundColor: "#fff"
+  },
+  Icon:{
+    width: 60,
+    marginBottom: 10,
+    alignSelf: 'center',
+    height: 60,
+    fontSize: 40,
+    borderRadius: 50,
+    color: '#2ba9bc',
+    padding: 10,
+    backgroundColor: '#fbf9fb'
+  },
+  center:{
+    textAlign: 'center',
+    fontSize: 16,
+    fontWeight: 'bold',
+    letterSpacing: 1
+  },
+
+
+  shop: {
+    marginTop: 40
+  },
+  shopping:{
+    marginTop: 10,
+    width: '100%',
+  }
 
 })

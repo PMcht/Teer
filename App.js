@@ -15,6 +15,8 @@ import { CardStyleInterpolators, createStackNavigator } from '@react-navigation/
 import { DepartSums } from './components/DepartSummary';
 import { useState } from 'react';
 import { ChoosePlayers } from './components/ChoosePlayers';
+import { DepartResa } from './pages/Home/DepartResa';
+import { GolfList } from './components/GolfList';
 
 
 export const config = {
@@ -66,7 +68,8 @@ export default function App() {
               <Stack.Screen
                 name="DepartSums"
                 options={{
-                  headerShown:false,
+                  headerShown:true,
+                  headerTitle:'Ma Réservation',
                   transitionSpec: {
                     open: config,
                     close: config
@@ -76,6 +79,23 @@ export default function App() {
                   >
                   {(props) => (
                     <DepartSums {...props} players={players} setPlayers={setPlayers} />
+                  )}
+              </Stack.Screen>
+
+              <Stack.Screen
+                name="DepartResa"
+                options={{
+                  headerShown:false,
+                  headerTitle:'Nouveau Départ',
+                  transitionSpec: {
+                    open: config,
+                    close: config
+                  },
+                  cardStyleInterpolator: CardStyleInterpolators.forHorizontalIOS,
+                }}
+                  >
+                  {(props) => (
+                    <DepartResa {...props} players={players} setPlayers={setPlayers} golf={golf} setGolf={setGolf} selectedDate={selectedDate} setSelectedDate={setSelectedDate} selectedHour={selectedHour} setSelectedHour={setSelectedHour} />
                   )}
               </Stack.Screen>
 
@@ -92,6 +112,22 @@ export default function App() {
                   >
                   {(props) => (
                     <ChoosePlayers {...props} players={players} setPlayers={setPlayers} />
+                  )}
+              </Stack.Screen>
+
+              <Stack.Screen
+                name="GolfList"
+                options={{
+                  headerShown:false,
+                  transitionSpec: {
+                    open: config,
+                    close: config
+                  },
+                  cardStyleInterpolator: CardStyleInterpolators.forHorizontalIOS,
+                }}
+                  >
+                  {(props) => (
+                    <GolfList setGolf={setGolf} {...props} />
                   )}
               </Stack.Screen>
 

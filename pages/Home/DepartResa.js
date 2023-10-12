@@ -9,7 +9,7 @@ import { SelectCountry } from "react-native-element-dropdown";
 import Calendar from "../../components/DatePicker";
 
 
-export function DepartHome({navigation, route, golf, players, setPlayers, selectedDate, setSelectedDate}) {
+export function DepartResa({navigation, route, golf, players, setPlayers, selectedDate, setSelectedDate}) {
 
   // Localisation
   let golfID = GolfAttributes.filter(({name}) => golf.includes(name))
@@ -46,13 +46,13 @@ export function DepartHome({navigation, route, golf, players, setPlayers, select
 
             {golf == '' ? 
 
-                  <TouchableOpacity activeOpacity={1} onPress={() => navigation.navigate('GolfListt')}>
+                  <TouchableOpacity activeOpacity={1} onPress={() => navigation.navigate('GolfList')}>
                       <Text style={styles.SelectButton}>Sélectionner un golf</Text>
                   </TouchableOpacity>
                 
                   :     
 
-                  <TouchableOpacity style={styles.flex} onPress={() => navigation.navigate('GolfListt')}>
+                  <TouchableOpacity style={styles.flex} onPress={() => navigation.navigate('GolfList')}>
 
                     <Image
                         style={styles.img}
