@@ -47,7 +47,7 @@ export default function App() {
     
     <NavigationContainer>
 
-      <Stack.Navigator screenOptions={{headerShown: false, tabBarStyle: styles.navbar, tabBarActiveTintColor: '#2ba9bc', tabBarInactiveTintColor: 'gray'}}>
+      <Stack.Navigator screenOptions={{gestureEnabled:true, headerShown: false, tabBarStyle: styles.navbar, tabBarActiveTintColor: '#2ba9bc', tabBarInactiveTintColor: 'gray'}}>
 
               <Stack.Screen
                 name="BottomNavigation"
@@ -61,7 +61,7 @@ export default function App() {
                 }}
                 >
                 {(props) => (
-                  <BottomNav {...props} players={players} setPlayers={setPlayers} />
+                  <BottomNav {...props} players={players} setPlayers={setPlayers} setGolf={setGolf} setSelectedDate={setSelectedDate} setSelectedHour={setSelectedHour} />
                 )}
               </Stack.Screen>
 
@@ -85,7 +85,7 @@ export default function App() {
               <Stack.Screen
                 name="DepartResa"
                 options={{
-                  headerShown:false,
+                  headerShown:true,
                   headerTitle:'Nouveau Départ',
                   transitionSpec: {
                     open: config,
@@ -146,7 +146,7 @@ export default function App() {
 
 
 
-export function BottomNav({players, setPlayers}) {
+export function BottomNav({players, setPlayers, setGolf, setSelectedDate, setSelectedHour}) {
 
   const Tab = createBottomTabNavigator();
 
@@ -154,7 +154,7 @@ export function BottomNav({players, setPlayers}) {
   return (
 
 
-      <Tab.Navigator screenOptions={{headerShown: false, tabBarStyle: styles.navbar, tabBarActiveTintColor: '#2ba9bc', tabBarInactiveTintColor: 'gray'}}>
+      <Tab.Navigator screenOptions={{gestureEnabled:true,  headerShown: false, tabBarStyle: styles.navbar, tabBarActiveTintColor: '#2ba9bc', tabBarInactiveTintColor: 'gray'}}>
 
               <Tab.Screen
                 name="Home"
@@ -166,7 +166,7 @@ export function BottomNav({players, setPlayers}) {
                 }}
                   >
                   {(props) => (
-                    <Home setPlayers={setPlayers} />
+                    <Home setPlayers={setPlayers} setGolf={setGolf} setSelectedDate={setSelectedDate} setSelectedHour={setSelectedHour} />
                   )}
               </Tab.Screen>
 

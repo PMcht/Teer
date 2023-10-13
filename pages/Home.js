@@ -2,7 +2,6 @@ import { StyleSheet, Text, View } from 'react-native'
 import React from 'react'
 import Header from '../components/Header'
 import { useWindowDimensions } from 'react-native'
-import { ScrollView } from 'react-native';
 import { Image } from 'react-native';
 import { FlatList } from 'react-native';
 import { departsList } from '../utils/json/departsList';
@@ -10,8 +9,10 @@ import { LinearGradient } from 'expo-linear-gradient';
 import { TouchableOpacity } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
+import { ScrollView } from 'react-native';
+import { SafeAreaView } from 'react-native';
 
-export default function Home({setPlayers}) {
+export default function Home({setPlayers, setGolf, setSelectedDate}) {
 
   const {height, width, scale, fontScale} = useWindowDimensions();
 
@@ -51,11 +52,11 @@ export default function Home({setPlayers}) {
 
   return (
 
-    <View style={[styles.mainContainer, {minHeight: height}]}>
+    <View style={styles.mainContainer}>
 
         <Header />
 
-        <ScrollView >
+        <ScrollView>
 
           <View style={[styles.container]}>
 
@@ -149,7 +150,7 @@ export default function Home({setPlayers}) {
 
                   return (
                   <View key={item.id} style={ [styles.bookingCard] } distance={15} >
-                      <TouchableOpacity style={ [styles.bookingCardInside] } onPress={() => navigation.navigate(item.link)}>
+                      <TouchableOpacity style={ [styles.bookingCardInside] } onPress={() => (setPlayers(''), setGolf(''), setSelectedDate(''), navigation.navigate(item.link))}>
 
                           <MaterialCommunityIcons style={styles.Icon} name={item.img} />
 
@@ -162,16 +163,22 @@ export default function Home({setPlayers}) {
 
           </View>
 
+          <View style={styles.shop}>
 
+              <Text style={styles.bold}>Dernières offres Bluegreen</Text>
 
-        </ScrollView>
+          </View>
+
+       </ScrollView>
+
+                
     </View>
   )
 }
 
 const styles = StyleSheet.create({
   mainContainer: {
-    backgroundColor: "#fff"
+    backgroundColor: "#fff",
   },
 
   welcome: {
