@@ -14,7 +14,7 @@ export default function News() {
 
   return (
 
-    <View style={[styles.mainContainer, {minHeight: height}]}>
+    <View style={[styles.mainContainer, {flex: 1}]}>
 
         <Header />
 
@@ -31,6 +31,5 @@ export default function News() {
 const styles = StyleSheet.create({
   mainContainer: {
     backgroundColor: "#fff",
-    paddingBottom: 100
   }
 })

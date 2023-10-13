@@ -51,7 +51,7 @@ export default function Home({setPlayers, setGolf, setSelectedDate, setSelectedH
 
   return (
 
-    <View style={styles.mainContainer}>
+    <View style={[styles.mainContainer, {flex: 1}]}>
 
         <Header />
 
@@ -178,7 +178,6 @@ export default function Home({setPlayers, setGolf, setSelectedDate, setSelectedH
 const styles = StyleSheet.create({
   mainContainer: {
     backgroundColor: "#fff",
-    paddingBottom: 100
   },
 
   welcome: {

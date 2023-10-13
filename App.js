@@ -47,7 +47,7 @@ export default function App() {
     
     <NavigationContainer>
 
-      <Stack.Navigator screenOptions={{gestureEnabled:true, headerShown: false, tabBarStyle: styles.navbar, tabBarActiveTintColor: '#2ba9bc', tabBarInactiveTintColor: 'gray'}}>
+      <Stack.Navigator screenOptions={{gestureEnabled:true, headerShown: false, tabBarActiveTintColor: '#2ba9bc', tabBarInactiveTintColor: 'gray'}}>
 
               <Stack.Screen
                 name="BottomNavigation"

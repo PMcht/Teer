@@ -8,7 +8,7 @@ export default function Proshop() {
 
     return (
   
-      <View style={[styles.mainContainer, {minHeight: height}]}>
+      <View style={[styles.mainContainer, {flex: 1}]}>
   
           <Header />
       
@@ -18,6 +18,5 @@ export default function Proshop() {
 const styles = StyleSheet.create({
     mainContainer: {
       backgroundColor: "#fff",
-      paddingBottom: 100
     }
   })

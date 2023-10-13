@@ -34,7 +34,7 @@ export function DepartResa({navigation, route, golf, players, setPlayers, select
   },)}
 
   return (
-    <View style={styles.scrollView}>
+    <View style={[styles.scrollView , {flex: 1}]}>
     <ScrollView>
     <View style={{height: height-100, width: width, paddingVertical: 30, paddingHorizontal: 20, backgroundColor: "#fff"}}>
 
