@@ -2,7 +2,6 @@ import React, { Component, useState } from "react";
 import { Button, View, Text, SafeAreaView, ScrollView, StyleSheet, TextInput, useWindowDimensions, TouchableOpacity, Image, Easing } from "react-native";
 import { GolfAttributes } from "../utils/Lists/Golfs";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
-import { useNavigation } from "@react-navigation/native";
 
 
 export function GolfList({route, navigation, setGolf}) {

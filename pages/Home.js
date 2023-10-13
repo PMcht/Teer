@@ -10,9 +10,8 @@ import { TouchableOpacity } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { ScrollView } from 'react-native';
-import { SafeAreaView } from 'react-native';
 
-export default function Home({setPlayers, setGolf, setSelectedDate}) {
+export default function Home({setPlayers, setGolf, setSelectedDate, setSelectedHour}) {
 
   const {height, width, scale, fontScale} = useWindowDimensions();
 
@@ -119,7 +118,7 @@ export default function Home({setPlayers, setGolf, setSelectedDate}) {
                             <LinearGradient style={styles.bgLinear} colors={['rgba(19, 19, 20, 0)', 'rgba(19, 19, 20, 0.6)', 'rgba(19, 19, 20, 0.8)']}>
                                 <View style={styles.names}>
                                     <Text style={styles.boldNext}>{item.golfName.length >= 12 ? item.golfName : `Golf de ${item.golfName}`} </Text>
-                                    <Text style={styles.thinNext}>{item.type} à {item.hour}</Text>
+                                    <Text style={styles.thinNext}>Le {item.date} à {item.hour}</Text>
                                 </View>
                                 <Text style={styles.button}>Plus d'infos</Text>
                             </LinearGradient>
@@ -150,7 +149,7 @@ export default function Home({setPlayers, setGolf, setSelectedDate}) {
 
                   return (
                   <View key={item.id} style={ [styles.bookingCard] } distance={15} >
-                      <TouchableOpacity style={ [styles.bookingCardInside] } onPress={() => (setPlayers(''), setGolf(''), setSelectedDate(''), navigation.navigate(item.link))}>
+                      <TouchableOpacity style={ [styles.bookingCardInside] } onPress={() => (setPlayers(''), setGolf(''), setSelectedDate(''), setSelectedHour(''), navigation.navigate(item.link))}>
 
                           <MaterialCommunityIcons style={styles.Icon} name={item.img} />
 
@@ -179,6 +178,7 @@ export default function Home({setPlayers, setGolf, setSelectedDate}) {
 const styles = StyleSheet.create({
   mainContainer: {
     backgroundColor: "#fff",
+    paddingBottom: 100
   },
 
   welcome: {

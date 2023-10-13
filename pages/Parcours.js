@@ -21,6 +21,7 @@ export default function Parcours() {
 
 const styles = StyleSheet.create({
     mainContainer: {
-      backgroundColor: "#fff"
+      backgroundColor: "#fff",
+      paddingBottom: 100
     }
   })

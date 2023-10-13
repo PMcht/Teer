@@ -1,8 +1,9 @@
 import { useState, useEffect } from 'react'
-import { StyleSheet, Text, View, TouchableOpacity } from 'react-native'
+import { StyleSheet, Text, View, TouchableOpacity, useWindowDimensions} from 'react-native'
+import { MaterialCommunityIcons } from '@expo/vector-icons';
 import moment from 'moment'
-import { ScrollView } from 'react-native-gesture-handler'
 import 'moment/locale/fr';
+import { ScrollView } from 'react-native-gesture-handler';
 
 const Calendar = ({ onSelectDate, selected }) => {
   const [dates, setDates] = useState([])
@@ -24,22 +25,12 @@ const Calendar = ({ onSelectDate, selected }) => {
     getDates()
   }, [])
 
-  const getCurrentMonth = () => {
-    const month = moment(dates[0]).add(scrollPosition / 60, 'days').format('MMMM')
-    const monthCap = month.charAt(0).toUpperCase() + month.slice(1)
-    setCurrentMonth(monthCap)
-  }
-
-  useEffect(() => {
-    getCurrentMonth()
-  }, [scrollPosition])
-
 
 
   return (
     <>
-      <View style={styles.centered}>
-        <Text style={styles.title}>{currentMonth}</Text>
+      <View>
+        <Text style={styles.title}>Sélectionner une date</Text>
       </View>
       <View style={styles.dateSection}>
         <View style={styles.scroll}>
@@ -71,11 +62,11 @@ const Date = ({ date, onSelectDate, selected }) => {
     const day = moment(date).format('YYYY-MM-DD') === moment().format('YYYY-MM-DD') ? 'Auj.' : moment(date).format('ddd').charAt(0).toUpperCase() + moment(date).format('ddd').slice(1)
     const dayNumber = moment(date).format('DD')
   
-    const fullDate = moment(date).format('YYYY-MM-DD')
+    const fullDate = moment(date).format('DD') + ' ' + moment(date).format('MMM').charAt(0).toUpperCase() + moment(date).format('MMM').slice(1)
     return (
       <TouchableOpacity
         onPress={() => onSelectDate(fullDate)}
-        style={[styles.card, selected === fullDate && { backgroundColor: "#2ba9bc", height: 90 }]}
+        style={[styles.card, selected === fullDate && { backgroundColor: "#2ba9bc" }]}
       >
         <Text
           style={[styles.big, selected === fullDate && { color: "#fff" }]}
@@ -86,12 +77,91 @@ const Date = ({ date, onSelectDate, selected }) => {
         <Text
           style={[
             styles.medium,
-            selected === fullDate && { color: "#fff", fontWeight: 'bold', fontSize: 24 },
+            selected === fullDate && { color: "#fff", fontWeight: 'bold' },
           ]}
         >
           {dayNumber}
         </Text>
       </TouchableOpacity>
+    )
+  }
+
+
+  export const Hours = ({ selectedHour, setSelectedHour }) => {
+    const [hours, setHours] = useState([])
+    const [scrollPosition, setScrollPosition] = useState(0)
+  
+    moment.locale('fr');
+  
+    const getHours = () => {
+      const _hours = []
+      for (let i = 0; i < 40; i++) {
+        const hour = moment('2016-03-12 08:00:00').add(i*15, 'minutes').format('HH:mm')
+        _hours.push(hour)
+      }
+      setHours(_hours)
+    }
+  
+    useEffect(() => {
+      getHours()
+    }, [])
+  
+  
+  
+    return (
+      <>
+        <View style={styles.HourSection}>
+          <View style={styles.scroll}>
+            <ScrollView
+              onScroll={(e) => setScrollPosition(e.nativeEvent.contentOffset.x)}
+              scrollEventThrottle={16}
+            >
+              {hours.map((hour, index) => (
+                <Hour
+                  key={index}
+                  hour={hour}
+                  setHours={setHours}
+                  selectedHour={selectedHour}
+                  setSelectedHour={setSelectedHour}
+                />
+              ))}
+            </ScrollView>
+          </View>
+        </View>
+      </>
+    )
+  }
+
+
+  const Hour = ({ hour, setSelectedHour, selectedHour, setHours }) => {
+
+    const {height, width, scale, fontScale} = useWindowDimensions();
+
+       return (
+        <>
+          <View style={selectedHour == hour ? '' : styles.line} />
+          <TouchableOpacity
+            onPress={() => (setSelectedHour(hour), setHours([hour]))}
+            style={[styles.hour, selectedHour === hour]}
+          >
+            <Text
+              style={[styles.medium, selectedHour === hour]}
+            >
+              {hour}
+            </Text>
+            <View style={styles.iconContainer}>
+                <MaterialCommunityIcons style={styles.Icon} name='account' />
+                <MaterialCommunityIcons style={styles.Icon} name='account' />
+                <MaterialCommunityIcons style={styles.Icon} name='account' />
+                <MaterialCommunityIcons style={styles.Icon} name='account' />
+            </View>
+            <Text
+              style={[styles.big]}
+            >
+              70€
+            </Text>
+          </TouchableOpacity>
+      </>
     )
   }
 
@@ -107,23 +177,58 @@ const styles = StyleSheet.create({
   },
   dateSection: {
     width: '100%',
-    padding: 20,
+    paddingVertical: 20,
   },
   card: {
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
     backgroundColor: '#eee',
     borderRadius: 10,
     borderColor: '#ddd',
-    padding: 10,
     alignItems: 'center',
-    height: 80,
-    width: 80,
+    height: 60,
+    width: 60,
     marginHorizontal: 5,
   },
   big: {
-    fontWeight: 'bold',
-    fontSize: 20,
+    fontSize: 15,
+    marginBottom: 0,
+    lineHeight: 16
   },
   medium: {
-    fontSize: 16,
+    fontSize: 20,
+    lineHeight: 20,
+    fontWeight: 'bold'
   },
+
+  HourSection: {
+    width: '100%',
+
+    maxHeight: 300
+  },
+  hour:{
+    paddingVertical: 20,
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'space-around',
+    flexDirection: 'row',
+  },
+  line: {
+    borderWidth: 1,
+    borderColor: '#eee'
+  },
+  iconContainer: {
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
+    height: 20,
+    marginTop: -2,
+  },
+  Icon:{
+    fontSize: 20,
+    lineHeight: 20,
+    marginRight: 1
+  }
 })

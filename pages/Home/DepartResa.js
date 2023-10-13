@@ -6,10 +6,10 @@ import { departsList } from "../../utils/json/departsList";
 import { GolfAttributes } from "../../utils/Lists/Golfs";
 import { SelectCountry } from "react-native-element-dropdown";
 
-import Calendar from "../../components/DatePicker";
+import Calendar, { Hours } from "../../components/DatePicker";
 
 
-export function DepartResa({navigation, route, golf, players, setPlayers, selectedDate, setSelectedDate}) {
+export function DepartResa({navigation, route, golf, players, setPlayers, selectedDate, setSelectedDate, selectedHour, setSelectedHour}) {
 
   // Localisation
   let golfID = GolfAttributes.filter(({name}) => golf.includes(name))
@@ -28,13 +28,14 @@ export function DepartResa({navigation, route, golf, players, setPlayers, select
     golfIMG: golfID[0].img,
     golfAddress: golfID[0].region,
     type: 'Parcours',
-    date: "20 Oct.",
-    hour: '14h00',
+    date: selectedDate,
+    hour: selectedHour,
     with: players,
   },)}
 
   return (
-    <ScrollView style={styles.scrollView}>
+    <View style={styles.scrollView}>
+    <ScrollView>
     <View style={{height: height-100, width: width, paddingVertical: 30, paddingHorizontal: 20, backgroundColor: "#fff"}}>
 
       
@@ -74,14 +75,15 @@ export function DepartResa({navigation, route, golf, players, setPlayers, select
               }
         </View>
 
-        <View style={[styles.timing, styles.line]}>
+        {golf == '' ? <></> : <View style={[styles.timing, styles.line]}>
 
-           <Calendar onSelectDate={setSelectedDate} selected={selectedDate} />
+            <Calendar onSelectDate={setSelectedDate} selected={selectedDate} />
 
-        </View>
+            {selectedDate == '' ? <></> : <Hours setSelectedHour={setSelectedHour} selectedHour={selectedHour} />}
 
+        </View>}
         
-        <View style={[styles.players, styles.line]}>
+        {selectedHour == '' ? <></> : <View style={[styles.players, styles.line]}>
           
             
             <View style={styles.playersTitle}>
@@ -90,7 +92,7 @@ export function DepartResa({navigation, route, golf, players, setPlayers, select
                     Partenaires
                   </Text>
                   <Text style={[styles.thin]}>
-                    Jusqu'à 4 joueurs
+                    Jusqu'à 3 joueurs
                   </Text>
               </View>
               {players.length == 3 ? <></> : 
@@ -140,9 +142,13 @@ export function DepartResa({navigation, route, golf, players, setPlayers, select
               )
             })}
 
-        </View>
+        </View>}
 
-        <View style={styles.modif}>
+
+        <View style={[styles.modif, {width: width}]}>
+
+        <Pressable onPress={() => {navigation.goBack() }} style={[styles.cancel, {backgroundColor: "#ba2504"}]}><Text style={[styles.bold, {color: "#fff"}]}>Annuler</Text></Pressable>
+
 
             <Pressable onPress={() => {
               if(players == '' || golf == ''){
@@ -151,19 +157,21 @@ export function DepartResa({navigation, route, golf, players, setPlayers, select
                 pushNewDepart();  navigation.goBack()
               }
               
-              }} style={[styles.buttons, {backgroundColor: "#2ba9bc"}]}><Text style={[styles.bold, {color: "#fff"}]}>Valider</Text></Pressable>
+              }} style={[styles.approve, {backgroundColor: "#2ba9bc"}]}><Text style={[styles.bold, {color: "#fff"}]}>Valider mon départ</Text></Pressable>
+
 
         </View>
 
     </View>
     </ScrollView>
+    </View>
   );
 }
 
 
 
 
-const styles = StyleSheet.create({  
+const styles = StyleSheet.create({
   dropdown: {
     height: 50,
     width: "40%"
@@ -258,18 +266,28 @@ const styles = StyleSheet.create({
     fontSize: 20
   },
   modif: {
-    paddingTop: 20,
+    position: 'absolute',
+    bottom: 0,
+    left: 0,
     display: "flex",
     alignItems: "center",
-    justifyContent: "center"
+    justifyContent: "space-around",
+    flexDirection: 'row'
   },
-  buttons: {
+  approve: {
     marginBottom: 10,
-    width: 150,
-    paddingVertical: 10,
+    width: '70%',
+    paddingVertical: 15,
     display: "flex",
     alignItems: "center",
     justifyContent: "center",
-    borderRadius: 20,
+  },
+  cancel: {
+    marginBottom: 10,
+    width: '25%',
+    paddingVertical: 15,
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
   }
 });
