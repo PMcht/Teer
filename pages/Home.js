@@ -1,15 +1,16 @@
 import { StyleSheet, Text, View } from 'react-native'
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import Header from '../components/Header'
 import { useWindowDimensions } from 'react-native'
 import { Image } from 'react-native';
 import { FlatList } from 'react-native';
-import { departsList } from '../utils/json/departsList';
+import { departListFiltered, departsList } from '../utils/json/departsList';
 import { LinearGradient } from 'expo-linear-gradient';
 import { TouchableOpacity } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { ScrollView } from 'react-native';
+import moment from 'moment';
 
 export default function Home({setPlayers, setGolf, setSelectedDate, setSelectedHour}) {
 
@@ -47,7 +48,7 @@ export default function Home({setPlayers, setGolf, setSelectedDate, setSelectedH
       desc: 'Inscription competition'
     },
   ]
-
+  
 
   return (
 
@@ -105,8 +106,10 @@ export default function Home({setPlayers, setGolf, setSelectedDate, setSelectedH
 
               <View style={{flex: 3}}>
 
+                {departsList.length == 0 ? <Text style={styles.noEvent}>Vous n'avez pas encore réservé d'évènements</Text> : 
                 <FlatList
                       data={departsList}
+                      extradata={this.state}
                       renderItem={({ item }) => 
                       
                         <TouchableOpacity onPress={() => (setPlayers(departsList[departsList.indexOf(item)].with), navigation.navigate('DepartSums', {id:departsList.indexOf(item)}))} activeOpacity={.9} style={[styles.event, {width: (320), marginHorizontal: (10)}]} key={item.id}>
@@ -133,7 +136,8 @@ export default function Home({setPlayers, setGolf, setSelectedDate, setSelectedH
                         disableIntervalMomentum={ true }
                         keyExtractor={(item) => item.id}
                         scrollEventThrottle={1}
-                        />
+                        />}
+
 
               </View>
 
@@ -244,6 +248,10 @@ const styles = StyleSheet.create({
 
   next: {
     marginTop: 10,
+  },
+  noEvent:{
+    textAlign: 'center',
+    marginTop: 10
   },
   bold: {
     fontWeight: '700',

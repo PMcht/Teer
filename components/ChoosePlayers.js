@@ -9,7 +9,7 @@ export function ChoosePlayers({ route, navigation, setPlayers, players }) {
 
 
         {persons.filter(element => {
-            return !players.includes(element.name) && element.type == 'Friends'
+            return !players.includes(element.name) && element.type == route.params.friendType
           }).map((person) => {
 
          

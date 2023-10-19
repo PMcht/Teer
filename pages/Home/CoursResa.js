@@ -7,9 +7,10 @@ import { GolfAttributes } from "../../utils/Lists/Golfs";
 import { SelectCountry } from "react-native-element-dropdown";
 
 import Calendar, { Hours } from "../../components/DatePicker";
+import { createNativeWrapper } from "react-native-gesture-handler";
 
 
-export function DepartResa({navigation, route, golf, players, setPlayers, selectedDate, setSelectedDate, selectedHour, setSelectedHour}) {
+export default function CoursResa({navigation, route, golf, players, setPlayers, selectedDate, setSelectedDate, selectedHour, setSelectedHour}) {
 
   // Localisation
   let golfID = GolfAttributes.filter(({name}) => golf.includes(name))
@@ -17,9 +18,34 @@ export function DepartResa({navigation, route, golf, players, setPlayers, select
   //Players
   let personToMap = persons.filter(({name}) => players.includes(name))
 
-  //Date
-
-
+  // Theme
+  const slides = [
+    {
+      id:1,
+      title: 'Approches'
+    },
+    {
+      id:2,
+      title: 'Driving'
+    },
+    {
+      id:3,
+      title: 'Putting'
+    },
+    {
+      id:4,
+      title: 'Fers'
+    },
+    {
+      id:5,
+      title: 'Effets'
+    },
+    {
+      id:6,
+      title: 'Bunkers'
+    },
+  ]
+  const [pressStatus, setPressStatus] = useState('')
 
   const {height, width, scale, fontScale} = useWindowDimensions();
   const pushNewDepart = () => { 
@@ -30,7 +56,7 @@ export function DepartResa({navigation, route, golf, players, setPlayers, select
     golfName: golfID[0].name,
     golfIMG: golfID[0].img,
     golfAddress: golfID[0].region,
-    type: 'Parcours',
+    type: 'Cours',
     date: selectedDate,
     hour: selectedHour,
     with: players,
@@ -39,7 +65,7 @@ export function DepartResa({navigation, route, golf, players, setPlayers, select
   return (
     <View style={[styles.scrollView , {flex: 1}]}>
     <ScrollView>
-    <View style={{minHeight: height-100, width: width, paddingVertical: 30, paddingHorizontal: 20, backgroundColor: "#fff"}}>
+    <View style={{minHeight: height, width: width, paddingVertical: 30, paddingHorizontal: 20, backgroundColor: "#fff"}}>
 
       
 
@@ -78,28 +104,21 @@ export function DepartResa({navigation, route, golf, players, setPlayers, select
               }
         </View>
 
-        {golf == '' ? <></> : <View style={[styles.timing, styles.line]}>
-
-            <Calendar onSelectDate={setSelectedDate} selected={selectedDate} />
-
-            {selectedDate == '' ? <></> : <Hours setSelectedHour={setSelectedHour} selectedHour={selectedHour} />}
-
-        </View>}
+        {golf == '' ? <></> : 
         
-        {selectedHour == '' ? <></> : <View style={[styles.players, styles.line]}>
+
+        
+        <View style={[styles.players, styles.line]}>
           
             
             <View style={styles.playersTitle}>
               <View>
                   <Text style={[styles.bold]}>
-                    Partenaires
-                  </Text>
-                  <Text style={[styles.thin]}>
-                    Jusqu'à 3 joueurs
+                    Professeur
                   </Text>
               </View>
-              {players.length == 3 ? <></> : 
-              <TouchableOpacity style={styles.addPlayer} onPress={() => navigation.navigate('ChoosePlayer', {friendType: 'Friends'}) }><Text>Ajouter un joueur</Text></TouchableOpacity>
+              {players.length == 1 ? <></> : 
+              <TouchableOpacity style={styles.addPlayer} onPress={() => navigation.navigate('ChoosePlayer', {friendType: 'Professor'})}><Text>Choisir mon coach</Text></TouchableOpacity>
               }
               
             </View>
@@ -147,23 +166,57 @@ export function DepartResa({navigation, route, golf, players, setPlayers, select
 
         </View>}
 
+        {players == '' ? <></> : <View style={[styles.timing, styles.line]}>
+
+            <Calendar onSelectDate={setSelectedDate} selected={selectedDate} />
+
+            {selectedDate == '' ? <></> : <Hours setSelectedHour={setSelectedHour} selectedHour={selectedHour} />}
+
+        </View>}
+        
+
+
+        {selectedHour == '' ? <></> : 
+        
+        <View style={[styles.players]}>                  
+          <View style={styles.playersTitle}>
+              <Text style={[styles.bold]}>
+                Theme du Cours
+              </Text>
+          </View>
+
+        <View style={styles.themeContainer}>
+            {slides.map((item) => {
+
+              return (
+
+                <TouchableOpacity style={[styles.themes, pressStatus === item.title && { backgroundColor: "#2ba9bc" }]} key={item.id} onPress={() => setPressStatus(item.title)}>
+                    <Text style={[styles.themeText, pressStatus === item.title && { color: '#fff' }]}>{item.title}</Text>
+                </TouchableOpacity>
+      
+            )})}
+        </View>
+        </View>
+        }
+
     </View>
     </ScrollView>
 
+    
     <View style={[styles.modif, {width: width}]}>
 
-        <Pressable onPress={() => {navigation.goBack() }} style={[styles.cancel, {borderColor: "#ba2504"}]}><MaterialCommunityIcons style={[styles.cancelIcon, {color: "#ba2504"}]} name='chevron-left' /></Pressable>
+<Pressable onPress={() => {navigation.goBack() }} style={[styles.cancel, {borderColor: "#ba2504"}]}><MaterialCommunityIcons style={[styles.cancelIcon, {color: "#ba2504"}]} name='chevron-left' /></Pressable>
 
 
-            <Pressable onPress={() => {
-              if(selectedHour !== ''){
-                pushNewDepart();  navigation.goBack(); sortDepart()
-              }
-              
-              }} style={[styles.approve, selectedHour !== '' && { backgroundColor: "#2ba9bc" }, selectedHour == '' && { backgroundColor: "grey" }]}><Text style={[styles.bold, {color: "#fff"}]}>Valider mon départ</Text></Pressable>
+    <Pressable onPress={() => {
+      if(players !== ''){
+        pushNewDepart();  navigation.goBack(); sortDepart()
+      }
+      
+      }} style={[styles.approve, players !== '' && { backgroundColor: "#2ba9bc" }, players == '' && { backgroundColor: "grey" }]}><Text style={[styles.bold, {color: "#fff"}]}>Confirmer</Text></Pressable>
 
 
-        </View>
+</View>
     </View>
   );
 }
@@ -172,6 +225,28 @@ export function DepartResa({navigation, route, golf, players, setPlayers, select
 
 
 const styles = StyleSheet.create({
+
+  themeContainer:{
+    display: "flex",
+    alignitems: "center",
+    justifyContent: 'center',
+    flexDirection: 'row',
+    flexWrap: 'wrap'
+  },
+  themes:{
+    borderWidth: 1,
+    borderColor: "#2ba9bc",
+    paddingVertical: 5,
+    paddingHorizontal: 10,
+    borderRadius: 10,
+    marginHorizontal: 10,
+    marginVertical: 5,
+  },
+  themeText: {
+    fontSize: 16,
+    fontWeight: 'bold',
+  },
+
   dropdown: {
     height: 50,
     width: "40%"

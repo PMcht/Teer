@@ -17,6 +17,7 @@ import { useState } from 'react';
 import { ChoosePlayers } from './components/ChoosePlayers';
 import { DepartResa } from './pages/Home/DepartResa';
 import { GolfList } from './components/GolfList';
+import CoursResa from './pages/Home/CoursResa';
 
 
 export const config = {
@@ -33,7 +34,6 @@ export default function App() {
   const Stack = createStackNavigator();
 
   const {height, width, scale, fontScale} = useWindowDimensions();
-
 
   const [players, setPlayers] = useState('')
   const [golf, setGolf] = useState('')
@@ -96,6 +96,23 @@ export default function App() {
                   >
                   {(props) => (
                     <DepartResa {...props} players={players} setPlayers={setPlayers} golf={golf} setGolf={setGolf} selectedDate={selectedDate} setSelectedDate={setSelectedDate} selectedHour={selectedHour} setSelectedHour={setSelectedHour} />
+                  )}
+              </Stack.Screen>
+
+              <Stack.Screen
+                name="CoursResa"
+                options={{
+                  headerShown:true,
+                  headerTitle:'Réserver un cours',
+                  transitionSpec: {
+                    open: config,
+                    close: config
+                  },
+                  cardStyleInterpolator: CardStyleInterpolators.forHorizontalIOS,
+                }}
+                  >
+                  {(props) => (
+                    <CoursResa {...props} players={players} setPlayers={setPlayers} golf={golf} setGolf={setGolf} selectedDate={selectedDate} setSelectedDate={setSelectedDate} selectedHour={selectedHour} setSelectedHour={setSelectedHour} />
                   )}
               </Stack.Screen>
 
