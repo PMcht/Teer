@@ -2,9 +2,13 @@ import React, { Component, useState } from "react";
 import { Button, View, Text, SafeAreaView, ScrollView, StyleSheet, TextInput, useWindowDimensions, TouchableOpacity, Image, Easing } from "react-native";
 import { GolfAttributes } from "../utils/Lists/Golfs";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
+import Header from "../components/Header";
+import { useNavigation } from "@react-navigation/native";
 
 
-export function GolfList({route, navigation, setGolf}) {
+export function GolfList({route}) {
+
+  const navigation = useNavigation();
   
   const {height, width, scale, fontScale} = useWindowDimensions();
   const [searchName, setSearchName] = useState("");
@@ -15,7 +19,11 @@ export function GolfList({route, navigation, setGolf}) {
 
   return (
 
+      <View>
 
+          <Header />
+
+      
     
           <ScrollView style={[styles.container, {minHeight: height}]}>
 
@@ -35,7 +43,7 @@ export function GolfList({route, navigation, setGolf}) {
                       return (
                           
                           <TouchableOpacity key={golf.id} style={styles.card} 
-                          onPress={() => {setGolf(golf.name); navigation.goBack()}}
+                          onPress={() => {navigation.navigate('GolfSummary')}}
                           >
 
                                 <Image
@@ -61,6 +69,8 @@ export function GolfList({route, navigation, setGolf}) {
                     
 
           </ScrollView>
+
+          </View>
   );
 }
 

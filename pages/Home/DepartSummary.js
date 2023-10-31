@@ -1,15 +1,16 @@
 
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { Button, View, Text, stylesheet, Image, ScrollView, SafeAreaView, useWindowDimensions, Pressable, SafeAreaViewBase, StyleSheet, TouchableOpacity, LogBox, Easing } from "react-native";
-import { persons } from "../utils/json/persons";
+import { persons } from "../../utils/json/persons";
 import { Dropdown, SelectCountry } from "react-native-element-dropdown";
-import { departsList } from "../utils/json/departsList";
+import { departsList } from "../../utils/json/departsList";
 
 export function DepartSums({navigation, route, players, setPlayers}) {
   const {height, width, scale, fontScale} = useWindowDimensions();
 
   const golfFocus = departsList[route.params.id];
   const index = departsList.indexOf(golfFocus)
+  golfFocus.with = players
 
   let personToMap = persons.filter(({name}) => players.includes(name))
 
@@ -67,11 +68,11 @@ export function DepartSums({navigation, route, players, setPlayers}) {
                     Partenaires
                   </Text>
                   <Text style={[styles.thin]}>
-                    Jusqu'à 4 joueurs
+                    Jusqu'à 3 joueurs
                   </Text>
               </View>
               {players.length >= 3 ? <></> : 
-              <TouchableOpacity style={styles.addPlayer} onPress={() => navigation.navigate('ChoosePlayer')}><Text>Ajouter un joueur</Text></TouchableOpacity>
+              <TouchableOpacity style={styles.addPlayer} onPress={() => {console.log(players); navigation.navigate('ChoosePlayer', {friendType: 'Friends'})}}><Text>Ajouter un joueur</Text></TouchableOpacity>
               }
               
             </View>
@@ -109,7 +110,7 @@ export function DepartSums({navigation, route, players, setPlayers}) {
                         placeholder=''
                         onChange={item => {
                           setPlayers(golfFocus.with.filter(item => item !== person.name))
-                          golfFocus.with = players.filter(item => item !== person.name)
+                          golfFocus.with = golfFocus.with.filter(item => item !== person.name)
                         }}
                         renderRightIcon={() => (
                           <MaterialCommunityIcons name="dots-vertical" style={styles.more} />
@@ -125,7 +126,9 @@ export function DepartSums({navigation, route, players, setPlayers}) {
 
             <Pressable onPress={() => {golfFocus.with = players; navigation.goBack()}} style={[styles.buttons, {backgroundColor: "#2ba9bc"}]}><Text style={[styles.bold, {color: "#fff"}]}>Confirmer</Text></Pressable>
             <Text>ou</Text>
-            <Pressable onPress={() => {departsList.splice(index, 1), navigation.goBack()}} style={[styles.buttons]} ><Text>Annuler ma réservation</Text></Pressable>
+            <Pressable onPress={() => {
+               departsList.splice(index, 1), navigation.goBack()
+              }} style={[styles.buttons]} ><Text>Annuler ma réservation</Text></Pressable>
 
         </View>
 

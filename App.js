@@ -7,18 +7,19 @@ import { StyleSheet, Text, View } from 'react-native';
 import Home from './pages/Home'
 import News from './pages/News';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
-import Parcours from './pages/Parcours';
 import Proshop from './pages/Proshop';
 import Profile from './pages/Profile';
 import { Easing } from 'react-native';
 import { CardStyleInterpolators, createStackNavigator } from '@react-navigation/stack';
-import { DepartSums } from './components/DepartSummary';
 import { useState } from 'react';
 import { ChoosePlayers } from './components/ChoosePlayers';
-import { DepartResa } from './pages/Home/DepartResa';
-import { GolfList } from './components/GolfList';
-import CoursResa from './pages/Home/CoursResa';
+import { DepartResa } from './pages/Parcours/DepartResa';
+import CoursResa from './pages/Parcours/CoursResa';
 import PracticeResa from './pages/Home/PracticeResa';
+import GolfSummary from './pages/Parcours/GolfSummary';
+import { GolfList } from './pages/GolfList';
+import { SafeAreaProvider } from 'react-native-safe-area-context';
+import { DepartSums } from './pages/Home/DepartSummary';
 
 
 export const config = {
@@ -29,10 +30,17 @@ export const config = {
   }
 }
 
+export const forFade = ({ current }) => ({
+  cardStyle: {
+    opacity: current.progress,
+  },
+});
+
 
 export default function App() {
 
-  const Stack = createStackNavigator();
+
+  const Tab = createBottomTabNavigator();
 
   const {height, width, scale, fontScale} = useWindowDimensions();
 
@@ -44,14 +52,116 @@ export default function App() {
 
   return (
 
-    <SafeAreaView style={{flex: 1, paddingTop: Platform.OS === "android" ? StatusBar.currentHeight +20 : 0, maxWidth: width}}>
+    <SafeAreaProvider style={{flex: 1, paddingTop: Platform.OS === "android" ? StatusBar.currentHeight +20 : 0, maxWidth: width}}>
     
     <NavigationContainer>
 
-      <Stack.Navigator screenOptions={{gestureEnabled:true, headerShown: false, tabBarActiveTintColor: '#2ba9bc', tabBarInactiveTintColor: 'gray'}}>
+    <Tab.Navigator screenOptions={{gestureEnabled:true,  headerShown: false, tabBarStyle: styles.navbar, tabBarActiveTintColor: '#2ba9bc', tabBarInactiveTintColor: 'gray'}}>
 
+        <Tab.Screen
+          name="Home"
+          options={{
+              headerShown:false,
+              tabBarIcon: ({ color, size }) => (
+                <MaterialCommunityIcons name="home" color={color} size={size} />
+              ),
+              cardStyleInterpolator: forFade,
+          }}
+            >
+            {(props) => (
+              <NavHome players={players} setPlayers={setPlayers} golf={golf} setGolf={setGolf} selectedDate={selectedDate} setSelectedDate={setSelectedDate} selectedHour={selectedHour} setSelectedHour={setSelectedHour} />
+            )}
+        </Tab.Screen>
+
+        <Tab.Screen
+          name="News"
+          options={{
+              headerShown:false,
+              tabBarIcon: ({ color, size }) => (
+                <MaterialCommunityIcons name="newspaper" color={color} size={size} />
+              ),
+              cardStyleInterpolator: forFade,
+          }}
+            >
+            {(props) => (
+              <News />
+            )}
+        </Tab.Screen>
+
+        <Tab.Screen
+          name="Parcours"
+          options={{
+              headerShown:false,
+              tabBarLabel: () => null,
+              tabBarIcon: ({ color, size }) => (
+                <MaterialCommunityIcons name="golf-tee" color={color} style={styles.middle} size={size} />
+              ),
+              cardStyleInterpolator: forFade,
+          }}
+            >
+            {(props) => (
+              <NavParcours setGolf={setGolf} />
+            )}
+        </Tab.Screen>
+
+        <Tab.Screen
+          name="Proshop"
+          options={{
+              headerShown:false,
+              tabBarIcon: ({ color, size }) => (
+                <MaterialCommunityIcons name="shopping" color={color} size={size} />
+              ),
+              cardStyleInterpolator: forFade,
+          }}
+            >
+            {(props) => (
+              <Proshop />
+            )}
+        </Tab.Screen>
+
+        <Tab.Screen
+          name="Profile"
+          options={{
+              headerShown:false,
+              tabBarIcon: ({ color, size }) => (
+                <MaterialCommunityIcons name="account" color={color} size={size} />
+              ),
+            cardStyleInterpolator: forFade,
+          }}
+            >
+            {(props) => (
+              <Profile />
+            )}
+        </Tab.Screen>
+
+
+        </Tab.Navigator>
+
+      
+      
+    </NavigationContainer>
+
+    </SafeAreaProvider>
+  );
+}
+
+
+
+
+
+
+export function NavHome({players, setPlayers, golf, setGolf, selectedDate, setSelectedDate, selectedHour, setSelectedHour}) {
+
+
+  const Stack = createStackNavigator();
+
+  return (
+
+    <Stack.Navigator screenOptions={{gestureEnabled:true, tabBarActiveTintColor: '#2ba9bc', tabBarInactiveTintColor: 'gray'}}>
+
+      
               <Stack.Screen
-                name="BottomNavigation"
+                name="HomeNext"
                 options={{
                   headerShown:false,
                   transitionSpec: {
@@ -60,10 +170,10 @@ export default function App() {
                   },
                   cardStyleInterpolator: CardStyleInterpolators.forHorizontalIOS,
                 }}
-                >
-                {(props) => (
-                  <BottomNav {...props} players={players} setPlayers={setPlayers} setGolf={setGolf} setSelectedDate={setSelectedDate} setSelectedHour={setSelectedHour} />
-                )}
+                  >
+                  {(props) => (
+                    <Home {...props} setPlayers={setPlayers} />
+                  )}
               </Stack.Screen>
 
               <Stack.Screen
@@ -80,40 +190,6 @@ export default function App() {
                   >
                   {(props) => (
                     <DepartSums {...props} players={players} setPlayers={setPlayers} />
-                  )}
-              </Stack.Screen>
-
-              <Stack.Screen
-                name="DepartResa"
-                options={{
-                  headerShown:true,
-                  headerTitle:'Nouveau Départ',
-                  transitionSpec: {
-                    open: config,
-                    close: config
-                  },
-                  cardStyleInterpolator: CardStyleInterpolators.forHorizontalIOS,
-                }}
-                  >
-                  {(props) => (
-                    <DepartResa {...props} players={players} setPlayers={setPlayers} golf={golf} setGolf={setGolf} selectedDate={selectedDate} setSelectedDate={setSelectedDate} selectedHour={selectedHour} setSelectedHour={setSelectedHour} />
-                  )}
-              </Stack.Screen>
-
-              <Stack.Screen
-                name="CoursResa"
-                options={{
-                  headerShown:true,
-                  headerTitle:'Réserver un cours',
-                  transitionSpec: {
-                    open: config,
-                    close: config
-                  },
-                  cardStyleInterpolator: CardStyleInterpolators.forHorizontalIOS,
-                }}
-                  >
-                  {(props) => (
-                    <CoursResa {...props} players={players} setPlayers={setPlayers} golf={golf} setGolf={setGolf} selectedDate={selectedDate} setSelectedDate={setSelectedDate} selectedHour={selectedHour} setSelectedHour={setSelectedHour} />
                   )}
               </Stack.Screen>
 
@@ -150,6 +226,22 @@ export default function App() {
                   )}
               </Stack.Screen>
 
+
+
+      </Stack.Navigator>
+      
+  );
+}
+
+export function NavParcours({players, setPlayers, golf, setGolf, selectedDate, setSelectedDate, selectedHour, setSelectedHour}) {
+
+
+  const Stack = createStackNavigator();
+
+  return (
+
+    <Stack.Navigator screenOptions={{gestureEnabled:true, tabBarActiveTintColor: '#2ba9bc', tabBarInactiveTintColor: 'gray'}}>
+
               <Stack.Screen
                 name="GolfList"
                 options={{
@@ -167,103 +259,75 @@ export default function App() {
               </Stack.Screen>
 
 
+              <Stack.Screen
+                name="DepartResa"
+                options={{
+                  headerShown:true,
+                  headerTitle:'Nouveau Départ',
+                  transitionSpec: {
+                    open: config,
+                    close: config
+                  },
+                  cardStyleInterpolator: CardStyleInterpolators.forHorizontalIOS,
+                }}
+                  >
+                  {(props) => (
+                    <DepartResa {...props} players={players} setPlayers={setPlayers} golf={golf} setGolf={setGolf} selectedDate={selectedDate} setSelectedDate={setSelectedDate} selectedHour={selectedHour} setSelectedHour={setSelectedHour} />
+                  )}
+              </Stack.Screen>
+
+              <Stack.Screen
+                name="CoursResa"
+                options={{
+                  headerShown:true,
+                  headerTitle:'Réserver un cours',
+                  transitionSpec: {
+                    open: config,
+                    close: config
+                  },
+                  cardStyleInterpolator: CardStyleInterpolators.forHorizontalIOS,
+                }}
+                  >
+                  {(props) => (
+                    <CoursResa {...props} players={players} setPlayers={setPlayers} golf={golf} setGolf={setGolf} selectedDate={selectedDate} setSelectedDate={setSelectedDate} selectedHour={selectedHour} setSelectedHour={setSelectedHour} />
+                  )}
+              </Stack.Screen>
+
+              <Stack.Screen
+                name="ChoosePlayer"
+                options={{
+                  headerShown:false,
+                  transitionSpec: {
+                    open: config,
+                    close: config
+                  },
+                  cardStyleInterpolator: CardStyleInterpolators.forHorizontalIOS,
+                }}
+                  >
+                  {(props) => (
+                    <ChoosePlayers {...props} players={players} setPlayers={setPlayers} />
+                  )}
+              </Stack.Screen>
+
+              <Stack.Screen
+                name="GolfSummary"
+                options={{
+                  headerShown:false,
+                  transitionSpec: {
+                    open: config,
+                    close: config
+                  },
+                  cardStyleInterpolator: forFade,
+                }}
+                  >
+                  {(props) => (
+                    <GolfSummary setGolf={setGolf} {...props} />
+                  )}
+              </Stack.Screen>
+
+
 
       </Stack.Navigator>
-      
-    </NavigationContainer>
-
-    </SafeAreaView>
-  );
-}
-
-
-
-
-
-
-export function BottomNav({players, setPlayers, setGolf, setSelectedDate, setSelectedHour}) {
-
-  const Tab = createBottomTabNavigator();
-
-
-  return (
-
-
-      <Tab.Navigator screenOptions={{gestureEnabled:true,  headerShown: false, tabBarStyle: styles.navbar, tabBarActiveTintColor: '#2ba9bc', tabBarInactiveTintColor: 'gray'}}>
-
-              <Tab.Screen
-                name="Home"
-                options={{
-                    headerShown:false,
-                    tabBarIcon: ({ color, size }) => (
-                      <MaterialCommunityIcons name="home" color={color} size={size} />
-                    ),
-                }}
-                  >
-                  {(props) => (
-                    <Home setPlayers={setPlayers} setGolf={setGolf} setSelectedDate={setSelectedDate} setSelectedHour={setSelectedHour} />
-                  )}
-              </Tab.Screen>
-
-              <Tab.Screen
-                name="News"
-                options={{
-                    headerShown:false,
-                    tabBarIcon: ({ color, size }) => (
-                      <MaterialCommunityIcons name="newspaper" color={color} size={size} />
-                    ),
-                }}
-                  >
-                  {(props) => (
-                    <News />
-                  )}
-              </Tab.Screen>
-
-              <Tab.Screen
-                name="Parcours"
-                options={{
-                    headerShown:false,
-                    tabBarLabel: () => null,
-                    tabBarIcon: ({ color, size }) => (
-                      <MaterialCommunityIcons name="golf-tee" color={color} style={styles.middle} size={size} />
-                    ),
-                }}
-                  >
-                  {(props) => (
-                    <Parcours />
-                  )}
-              </Tab.Screen>
-
-              <Tab.Screen
-                name="Proshop"
-                options={{
-                    headerShown:false,
-                    tabBarIcon: ({ color, size }) => (
-                      <MaterialCommunityIcons name="shopping" color={color} size={size} />
-                    ),
-                }}
-                  >
-                  {(props) => (
-                    <Proshop />
-                  )}
-              </Tab.Screen>
-
-              <Tab.Screen
-                name="Profile"
-                options={{
-                    headerShown:false,
-                    tabBarIcon: ({ color, size }) => (
-                      <MaterialCommunityIcons name="account" color={color} size={size} />
-                    ),
-                }}
-                  >
-                  {(props) => (
-                    <Profile />
-                  )}
-              </Tab.Screen>
-
-
-      </Tab.Navigator>
       
   );
 }

@@ -23,14 +23,14 @@ export default function Home({setPlayers, setGolf, setSelectedDate, setSelectedH
       id: 0,
       title: 'Parcours',
       img: "golf",
-      link: 'DepartResa',
+      link: 'Parcours',
       desc: 'Réserver un départ'
     },
     {
       id: 1,
       title: 'Cours',
       img: "golf-cart",
-      link: 'CoursResa',
+      link: 'Parcours',
       desc: 'Prendre un cours'
     },
     {
@@ -153,7 +153,7 @@ export default function Home({setPlayers, setGolf, setSelectedDate, setSelectedH
 
                   return (
                   <View key={item.id} style={ [styles.bookingCard] } distance={15} >
-                      <TouchableOpacity style={ [styles.bookingCardInside] } onPress={() => (setPlayers(''), setGolf(''), setSelectedDate(''), setSelectedHour(''), navigation.navigate(item.link))}>
+                      <TouchableOpacity style={ [styles.bookingCardInside] } onPress={() => (navigation.navigate(item.link))}>
 
                           <MaterialCommunityIcons style={styles.Icon} name={item.img} />
 

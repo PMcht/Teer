@@ -15,7 +15,7 @@ export function ChoosePlayers({ route, navigation, setPlayers, players }) {
          
             return (
               <TouchableOpacity onPress={() => {
-                setPlayers([...players, person.name]); 
+                setPlayers([...players, person.name]);
                 navigation.goBack()} } 
                 key={person.id} style={[styles.flex, styles.person]}>
                     <Image
