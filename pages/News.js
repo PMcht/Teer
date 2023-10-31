@@ -18,7 +18,7 @@ export default function News() {
 
         <Header />
 
-        <Tab.Navigator screenOptions={{tabBarStyle: styles.topBar, tabBarIndicatorStyle: {backgroundColor: '#2ba9bc'}, tabBarActiveTintColor: '#2ba9bc', tabBarInactiveTintColor: 'gray'}}>
+        <Tab.Navigator screenOptions={{tabBarStyle: styles.topBar, tabBarIndicatorStyle: {backgroundColor: '#2ba9bc', marginTop: 10}, tabBarActiveTintColor: '#2ba9bc', tabBarInactiveTintColor: 'gray'}}>
             <Tab.Screen name="BlueGreen" component={BlueGreenActu} />
             <Tab.Screen name="Mes Amis" component={FriendsActu}  />
             <Tab.Screen name="Mes Golfs" component={MyGolfActu}  />

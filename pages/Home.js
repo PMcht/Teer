@@ -54,7 +54,7 @@ export default function Home({setPlayers, setGolf, setSelectedDate, setSelectedH
 
     <View style={[styles.mainContainer, {flex: 1}]}>
 
-        <Header />
+        <Header style={styles.header} />
 
         <ScrollView>
 
@@ -189,7 +189,8 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "space-between",
     flexDirection: "row",
-    paddingHorizontal: 20
+    paddingHorizontal: 20,
+    marginTop: 10
   },
   welcomeMain: {
     display: "flex",
@@ -263,7 +264,16 @@ const styles = StyleSheet.create({
     marginTop: 10,
     position: 'relative',
     borderRadius: 10,
-    overflow: "hidden"
+    overflow: "hidden",
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 0,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 3.84,
+
+    elevation: 3,
   },
   bgEvent: {
     position: "absolute",
@@ -317,8 +327,15 @@ const styles = StyleSheet.create({
     width: 160,
     height: 120,
     borderRadius: 10,
-    borderWidth: 5,
-    borderColor: '#fbf9fb',
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 0,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 3.84,
+
+    elevation: 3,
     display: "flex",
     justifyContent: 'center',
     alignContent: 'center',

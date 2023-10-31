@@ -18,6 +18,7 @@ import { ChoosePlayers } from './components/ChoosePlayers';
 import { DepartResa } from './pages/Home/DepartResa';
 import { GolfList } from './components/GolfList';
 import CoursResa from './pages/Home/CoursResa';
+import PracticeResa from './pages/Home/PracticeResa';
 
 
 export const config = {
@@ -113,6 +114,23 @@ export default function App() {
                   >
                   {(props) => (
                     <CoursResa {...props} players={players} setPlayers={setPlayers} golf={golf} setGolf={setGolf} selectedDate={selectedDate} setSelectedDate={setSelectedDate} selectedHour={selectedHour} setSelectedHour={setSelectedHour} />
+                  )}
+              </Stack.Screen>
+
+              <Stack.Screen
+                name="PracticeResa"
+                options={{
+                  headerShown:true,
+                  headerTitle:'Mes crédits Practice',
+                  transitionSpec: {
+                    open: config,
+                    close: config
+                  },
+                  cardStyleInterpolator: CardStyleInterpolators.forHorizontalIOS,
+                }}
+                  >
+                  {(props) => (
+                    <PracticeResa {...props} players={players} setPlayers={setPlayers} golf={golf} setGolf={setGolf} selectedDate={selectedDate} setSelectedDate={setSelectedDate} selectedHour={selectedHour} setSelectedHour={setSelectedHour} />
                   )}
               </Stack.Screen>
 
