@@ -96,18 +96,27 @@ mainContainer: {
   alignItems: "center", 
   justifyContent: "center",
   flexDirection: "column",
-  backgroundColor: "#fff"
+  backgroundColor: "#faf8f7"
 },
 card: {
-  marginVertical: 5,
+  marginVertical: 10,
   paddingHorizontal: "2.5%",
-  paddingVertical: 30,
+  paddingVertical: 10,
   width: '95%',
   minHeight: 100,
   backgroundColor: "#fff",
   borderRadius: 10,
   borderBottomWidth: 1,
-  borderColor: "#e9ebf0"
+  borderColor: "#e9ebf0",
+  shadowColor: "#000",
+  shadowOffset: {
+    width: 0,
+    height: 0,
+  },
+  shadowOpacity: 0.25,
+  shadowRadius: 3.84,
+
+  elevation: 3,
 },
 textWidth: {
   width: 300,

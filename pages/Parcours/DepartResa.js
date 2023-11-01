@@ -12,7 +12,7 @@ import Calendar, { Hours } from "../../components/DatePicker";
 export function DepartResa({navigation, route, golf, players, setPlayers, selectedDate, setSelectedDate, selectedHour, setSelectedHour}) {
 
   // Localisation
-  let golfID = GolfAttributes.filter(({name}) => golf.includes(name))
+  let golfID = GolfAttributes.filter(({name}) => golf.name.includes(name))
 
   //Players
   let personToMap = persons.filter(({name}) => players.includes(name))
@@ -48,34 +48,26 @@ export function DepartResa({navigation, route, golf, players, setPlayers, select
               Localisation
             </Text>
 
-            {golf == '' ? 
+            <View style={styles.flex}>
 
-                  <TouchableOpacity activeOpacity={1} onPress={() => navigation.navigate('GolfList')}>
-                      <Text style={styles.SelectButton}>Sélectionner un golf</Text>
-                  </TouchableOpacity>
-                
-                  :     
+              <Image
+                  style={styles.img}
+                  source={golfID[0].img}
+                  resizeMode="cover"
+                />
 
-                  <TouchableOpacity style={styles.flex} onPress={() => navigation.navigate('GolfList')}>
+              <View style={styles.info}>
+                <Text style={styles.bold}>Golf de {golfID[0].name}</Text>
+                <Text style={[styles.thin, {marginTop: 10}]}>{golfID[0].region}</Text>
+                <View style={[styles.flex, {marginTop: 10}]}>
+                  <Text style={styles.space}>Handicap <Text style={styles.param}>22</Text></Text>
+                  <Text style={styles.space}>Par <Text style={styles.param}>22</Text></Text>
+                  <Text >Slope <Text style={styles.param}>22</Text></Text>
+                </View>
+              </View>
 
-                    <Image
-                        style={styles.img}
-                        source={golfID[0].img}
-                        resizeMode="cover"
-                      />
-
-                    <View style={styles.info}>
-                      <Text style={styles.bold}>Golf de {golfID[0].name}</Text>
-                      <Text style={[styles.thin, {marginTop: 10}]}>{golfID[0].region}</Text>
-                      <View style={[styles.flex, {marginTop: 10}]}>
-                        <Text style={styles.space}>Handicap <Text style={styles.param}>22</Text></Text>
-                        <Text style={styles.space}>Par <Text style={styles.param}>22</Text></Text>
-                        <Text >Slope <Text style={styles.param}>22</Text></Text>
-                      </View>
-                    </View>
-
-                  </TouchableOpacity>
-              }
+            </View>
+              
         </View>
 
         {golf == '' ? <></> : <View style={[styles.timing, styles.line]}>

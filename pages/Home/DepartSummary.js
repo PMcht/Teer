@@ -16,7 +16,8 @@ export function DepartSums({navigation, route, players, setPlayers}) {
 
 
   return (
-    <ScrollView style={styles.scrollView}>
+    <SafeAreaView style={[styles.mainContainer, {flex: 1}]}>
+    <ScrollView style={[styles.scrollView]}>
     <View style={{height: height-100, width: width, paddingVertical: 30, paddingHorizontal: 20, backgroundColor: "#fff"}}>
 
 
@@ -134,6 +135,7 @@ export function DepartSums({navigation, route, players, setPlayers}) {
 
     </View>
     </ScrollView>
+    </SafeAreaView>
   );
 }
 

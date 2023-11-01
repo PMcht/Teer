@@ -4,9 +4,10 @@ import { GolfAttributes } from "../utils/Lists/Golfs";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import Header from "../components/Header";
 import { useNavigation } from "@react-navigation/native";
+import { StatusBar } from "react-native";
 
 
-export function GolfList({route}) {
+export function GolfList({route, setGolf}) {
 
   const navigation = useNavigation();
   
@@ -19,18 +20,18 @@ export function GolfList({route}) {
 
   return (
 
-      <View>
+      <View style={styles.mainContainer}>
 
           <Header />
 
-      
+          <View style={styles.searchBar}>
+              <MaterialCommunityIcons style={styles.searchIcon} name={"magnify"} />
+                  <TextInput placeholder="Trouver un Golf" style={styles.searchInput} onChangeText={(text) => setSearchName(text)} />
+              </View>
     
           <ScrollView style={[styles.container, {minHeight: height}]}>
 
-              <View style={styles.searchBar}>
-              <MaterialCommunityIcons style={styles.searchIcon} name={"magnify"} />
-                  <TextInput placeholder="Rechercher" style={styles.searchInput} onChangeText={(text) => setSearchName(text)} />
-              </View>
+
 
               {isResults ? (
                 <>
@@ -39,21 +40,20 @@ export function GolfList({route}) {
                 </>
                 ) : (
                   <View style={styles.cardContainer}>
-                    {GolfFiltered.map((golf) => {
+                    {GolfFiltered.map((golft) => {
                       return (
                           
-                          <TouchableOpacity key={golf.id} style={styles.card} 
-                          onPress={() => {navigation.navigate('GolfSummary')}}
-                          >
+                          <TouchableOpacity key={golft.id} style={styles.card} 
+                          onPress={() => {setGolf(golft); navigation.navigate('GolfSummary') }}>
 
                                 <Image
                                     style={styles.golfIMG}
-                                    source={golf.img}
+                                    source={golft.img}
                                     resizeMode="cover"
                                   />
                                   <View style={styles.cardTxt}>
-                                      <Text style={styles.golfName}>{golf.name}</Text>
-                                      <Text style={styles.golfAddr}>{golf.region}</Text>
+                                      <Text style={styles.golfName}>{golft.name}</Text>
+                                      <Text style={styles.golfAddr}>{golft.region}</Text>
                                       <View style={styles.stars}>
                                           <MaterialCommunityIcons style={styles.starIcon} name={'star'} />
                                           <Text style={styles.rate}>4.5/5</Text>
@@ -76,9 +76,15 @@ export function GolfList({route}) {
 
 
 const styles = StyleSheet.create({
-  container: {
-      backgroundColor: "#fff",
+
+
+  mainContainer: {
+      backgroundColor: "#faf8f7",
       paddingBottom: 100,
+      paddingTop:StatusBar.currentHeight
+  },
+  container:{
+    marginVertical: 10
   },
   searchBar: {
     display: "flex",

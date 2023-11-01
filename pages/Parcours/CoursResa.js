@@ -13,7 +13,7 @@ import { createNativeWrapper } from "react-native-gesture-handler";
 export default function CoursResa({navigation, route, golf, players, setPlayers, selectedDate, setSelectedDate, selectedHour, setSelectedHour}) {
 
   // Localisation
-  let golfID = GolfAttributes.filter(({name}) => golf.includes(name))
+  let golfID = GolfAttributes.filter(({name}) => golf.name.includes(name))
 
   //Players
   let personToMap = persons.filter(({name}) => players.includes(name))

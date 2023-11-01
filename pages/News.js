@@ -6,6 +6,7 @@ import { createMaterialTopTabNavigator } from '@react-navigation/material-top-ta
 import BlueGreenActu from './Actus/BlueGreenActu';
 import FriendsActu from './Actus/FriendsActu';
 import MyGolfActu from './Actus/MyGolfActu';
+import { StatusBar } from 'react-native';
 
 export default function News() {
   const {height, width, scale, fontScale} = useWindowDimensions();
@@ -30,6 +31,10 @@ export default function News() {
 
 const styles = StyleSheet.create({
   mainContainer: {
-    backgroundColor: "#fff",
+    backgroundColor: "#faf8f7",
+    paddingTop:StatusBar.currentHeight
+  },
+  topBar:{
+    backgroundColor: '#faf8f7'
   }
 })

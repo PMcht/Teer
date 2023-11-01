@@ -11,6 +11,8 @@ import { useNavigation } from '@react-navigation/native';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { ScrollView } from 'react-native';
 import moment from 'moment';
+import { StatusBar } from 'react-native';
+import NextEvents from '../components/NextEvents';
 
 export default function Home({setPlayers, setGolf, setSelectedDate, setSelectedHour}) {
 
@@ -104,47 +106,12 @@ export default function Home({setPlayers, setGolf, setSelectedDate, setSelectedH
 
               <Text style={styles.bold}>Mes évènements à venir</Text>
 
-              <View style={{flex: 3}}>
-
-                {departsList.length == 0 ? <Text style={styles.noEvent}>Vous n'avez pas encore réservé d'évènements</Text> : 
-                <FlatList
-                      data={departsList}
-                      extradata={this.state}
-                      renderItem={({ item }) => 
-                      
-                        <TouchableOpacity onPress={() => (setPlayers(departsList[departsList.indexOf(item)].with), navigation.navigate('DepartSums', {id:departsList.indexOf(item)}))} activeOpacity={.9} style={[styles.event, {width: (320), marginHorizontal: (10)}]} key={item.id}>
-                            <Image
-                              style={styles.bgEvent}
-                              source={item.golfIMG}
-                              resizeMode='cover'
-                            />
-                            <LinearGradient style={styles.bgLinear} colors={['rgba(19, 19, 20, 0)', 'rgba(19, 19, 20, 0.6)', 'rgba(19, 19, 20, 0.8)']}>
-                                <View style={styles.names}>
-                                    <Text style={styles.boldNext}>{item.golfName.length >= 12 ? item.golfName : `Golf de ${item.golfName}`} </Text>
-                                    <Text style={styles.thinNext}>Le {item.date} à {item.hour}</Text>
-                                </View>
-                                <Text style={styles.button}>Plus d'infos</Text>
-                            </LinearGradient>
-                        </TouchableOpacity>
-
-                        }
-                        horizontal
-                        showsHorizontalScrollIndicator ={false}
-                        pagingEnabled
-                        snapToInterval={(330)}
-                        decelerationRate={0.0}
-                        disableIntervalMomentum={ true }
-                        keyExtractor={(item) => item.id}
-                        scrollEventThrottle={1}
-                        />}
-
-
-              </View>
+              <NextEvents setPlayers={setPlayers} />
 
           </View>
 
 
-          <Text style={[styles.bold, { marginTop: 35, marginBottom: 20}]}>Réserver un évènement</Text>
+          <Text style={[styles.bold, { marginTop: 30, marginBottom: 20}]}>Réserver un évènement</Text>
 
 
           <View style={styles.book}>
@@ -181,7 +148,8 @@ export default function Home({setPlayers, setGolf, setSelectedDate, setSelectedH
 
 const styles = StyleSheet.create({
   mainContainer: {
-    backgroundColor: "#fff",
+    backgroundColor: "#faf8f7",
+    paddingTop:StatusBar.currentHeight
   },
 
   welcome: {
@@ -249,66 +217,13 @@ const styles = StyleSheet.create({
 
   next: {
     marginTop: 10,
-  },
-  noEvent:{
-    textAlign: 'center',
-    marginTop: 10
+    width: '100%',
+    overflow: 'visible'
   },
   bold: {
     fontWeight: '700',
     fontSize: 18,
     marginHorizontal: 25
-  },
-  event: {
-    height: 170,
-    marginTop: 10,
-    position: 'relative',
-    borderRadius: 10,
-    overflow: "hidden",
-    shadowColor: "#000",
-    shadowOffset: {
-      width: 0,
-      height: 0,
-    },
-    shadowOpacity: 0.25,
-    shadowRadius: 3.84,
-
-    elevation: 3,
-  },
-  bgEvent: {
-    position: "absolute",
-    width: "100%",
-    height: 200,
-  },
-  bgLinear: {
-    position: "absolute",
-    bottom: 0,
-    height: '40%',
-    width: "100%",
-    display: "flex",
-    alignItems: "center",
-    justifyContent: 'space-around',
-    flexDirection: 'row'
-  },
-  boldNext: {
-    fontWeight: '700',
-    fontSize: 20,
-    color: "#fff"
-  },
-  thinNext: {
-    color: "#fff",
-    fontStyle: 'italic'
-  },
-  names:{
-    maxWidth: 190
-  },
-  button:{
-    backgroundColor: "#2ba9bc",
-    paddingVertical: 5,
-    paddingHorizontal: 14,
-    fontSize: 16,
-    borderRadius: 10,
-    color: "#fff"
   },
 
 

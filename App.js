@@ -51,10 +51,8 @@ export default function App() {
 
 
   return (
-
-    <SafeAreaProvider style={{flex: 1, paddingTop: Platform.OS === "android" ? StatusBar.currentHeight +20 : 0, maxWidth: width}}>
     
-    <NavigationContainer>
+    <NavigationContainer >
 
     <Tab.Navigator screenOptions={{gestureEnabled:true,  headerShown: false, tabBarStyle: styles.navbar, tabBarActiveTintColor: '#2ba9bc', tabBarInactiveTintColor: 'gray'}}>
 
@@ -100,7 +98,7 @@ export default function App() {
           }}
             >
             {(props) => (
-              <NavParcours setGolf={setGolf} />
+              <NavParcours players={players} setPlayers={setPlayers} golf={golf} setGolf={setGolf} selectedDate={selectedDate} setSelectedDate={setSelectedDate} selectedHour={selectedHour} setSelectedHour={setSelectedHour} />
             )}
         </Tab.Screen>
 
@@ -130,7 +128,7 @@ export default function App() {
           }}
             >
             {(props) => (
-              <Profile />
+              <NavProfile setPlayers={setPlayers} players={players} />
             )}
         </Tab.Screen>
 
@@ -141,7 +139,6 @@ export default function App() {
       
     </NavigationContainer>
 
-    </SafeAreaProvider>
   );
 }
 
@@ -321,7 +318,7 @@ export function NavParcours({players, setPlayers, golf, setGolf, selectedDate, s
                 }}
                   >
                   {(props) => (
-                    <GolfSummary setGolf={setGolf} {...props} />
+                    <GolfSummary players={players} setPlayers={setPlayers} golf={golf} setGolf={setGolf} selectedDate={selectedDate} setSelectedDate={setSelectedDate} selectedHour={selectedHour} setSelectedHour={setSelectedHour} />
                   )}
               </Stack.Screen>
 
@@ -331,6 +328,76 @@ export function NavParcours({players, setPlayers, golf, setGolf, selectedDate, s
       
   );
 }
+
+
+export function NavProfile({players, setPlayers, golf, setGolf, selectedDate, setSelectedDate, selectedHour, setSelectedHour}) {
+
+
+  const Stack = createStackNavigator();
+
+  return (
+
+    <Stack.Navigator screenOptions={{gestureEnabled:true, tabBarActiveTintColor: '#2ba9bc', tabBarInactiveTintColor: 'gray'}}>
+
+
+
+              <Stack.Screen
+                name="ProfileNext"
+                options={{
+                  headerShown:false,
+                  transitionSpec: {
+                    open: config,
+                    close: config
+                  },
+                  cardStyleInterpolator: CardStyleInterpolators.forHorizontalIOS,
+                }}
+                  >
+                  {(props) => (
+                    <Profile {...props} players={players} setPlayers={setPlayers} />
+                  )}
+              </Stack.Screen>
+
+
+              <Stack.Screen
+                name="ChoosePlayer"
+                options={{
+                  headerShown:false,
+                  transitionSpec: {
+                    open: config,
+                    close: config
+                  },
+                  cardStyleInterpolator: CardStyleInterpolators.forHorizontalIOS,
+                }}
+                  >
+                  {(props) => (
+                    <ChoosePlayers {...props} players={players} setPlayers={setPlayers} />
+                  )}
+              </Stack.Screen>
+
+              <Stack.Screen
+                name="DepartSums"
+                options={{
+                  headerShown:true,
+                  headerTitle:'Ma Réservation',
+                  transitionSpec: {
+                    open: config,
+                    close: config
+                  },
+                  cardStyleInterpolator: CardStyleInterpolators.forHorizontalIOS,
+                }}
+                  >
+                  {(props) => (
+                    <DepartSums {...props} players={players} setPlayers={setPlayers} />
+                  )}
+              </Stack.Screen>
+
+
+
+      </Stack.Navigator>
+      
+  );
+}
+
 
 const styles = StyleSheet.create({
   navbar: {
