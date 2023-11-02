@@ -49,6 +49,7 @@ export function GolfList({route, setGolf}) {
                                 <Image
                                     style={styles.golfIMG}
                                     source={golft.img}
+                                    resizeMethod='resize'
                                     resizeMode="cover"
                                   />
                                   <View style={styles.cardTxt}>

@@ -3,14 +3,10 @@ import React, { useEffect, useState } from 'react'
 import Header from '../components/Header'
 import { useWindowDimensions } from 'react-native'
 import { Image } from 'react-native';
-import { FlatList } from 'react-native';
-import { departListFiltered, departsList } from '../utils/json/departsList';
-import { LinearGradient } from 'expo-linear-gradient';
 import { TouchableOpacity } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { ScrollView } from 'react-native';
-import moment from 'moment';
 import { StatusBar } from 'react-native';
 import NextEvents from '../components/NextEvents';
 
@@ -67,7 +63,7 @@ export default function Home({setPlayers, setGolf, setSelectedDate, setSelectedH
                 <View style={styles.welcomeMain}>
                   <Image
                       style={styles.pic}
-                      source={require('../assets/Home/meteo.png')}
+                      source={require('../assets/Weather/cloudy.png')}
                     />
                   <Text style={styles.weather}>20°C</Text>
                 </View>
@@ -235,12 +231,11 @@ const styles = StyleSheet.create({
     alignContent: 'center',
     flexDirection: 'row',
     flexWrap: "wrap",
-    columnGap: 30,
-    rowGap: 15
+    columnGap: 10,
   },
   bookingCard:{
-    width: 160,
-    height: 120,
+    width: 90,
+    height: 90,
     borderRadius: 10,
     shadowColor: "#000",
     shadowOffset: {
@@ -257,21 +252,16 @@ const styles = StyleSheet.create({
     backgroundColor: "#fff"
   },
   Icon:{
-    width: 60,
     marginBottom: 10,
     alignSelf: 'center',
-    height: 60,
-    fontSize: 40,
-    borderRadius: 50,
-    color: '#2ba9bc',
-    padding: 10,
-    backgroundColor: '#fbf9fb'
+    fontSize: 30,
+    color: 'grey',
   },
   center:{
     textAlign: 'center',
-    fontSize: 16,
-    fontWeight: 'bold',
-    letterSpacing: 1
+    fontSize: 14,
+    fontWeight: '700',
+
   },
 
 

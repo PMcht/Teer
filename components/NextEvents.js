@@ -24,7 +24,8 @@ export default function NextEvents({setPlayers}) {
                             <Image
                               style={styles.bgEvent}
                               source={item.golfIMG}
-                              resizeMode='cover'
+                              resizeMethod="resize"
+                              resizeMode="cover"
                             />
 
                             <View style={styles.resaInfo}>

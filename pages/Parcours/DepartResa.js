@@ -39,7 +39,7 @@ export function DepartResa({navigation, route, golf, players, setPlayers, select
   return (
     <View style={[styles.scrollView , {flex: 1}]}>
     <ScrollView>
-    <View style={{minHeight: height-100, width: width, paddingVertical: 30, paddingHorizontal: 20, backgroundColor: "#fff"}}>
+    <View style={{minHeight: height-200, width: width, paddingVertical: 30, paddingHorizontal: 20, backgroundColor: "#faf8f7"}}>
 
       
 
@@ -70,74 +70,75 @@ export function DepartResa({navigation, route, golf, players, setPlayers, select
               
         </View>
 
-        {golf == '' ? <></> : <View style={[styles.timing, styles.line]}>
+        {golf == '' ? <></> : <View style={[styles.players, styles.line]}>
+          
+            
+          <View style={styles.playersTitle}>
+            <View>
+                <Text style={[styles.bold]}>
+                  Partenaires
+                </Text>
+                <Text style={[styles.thin]}>
+                  Jusqu'à 3 joueurs
+                </Text>
+            </View>
+            {players.length == 3 ? <></> : 
+            <TouchableOpacity style={styles.addPlayer} onPress={() => navigation.navigate('ChoosePlayer', {friendType: 'Friends'}) }><Text>Ajouter un joueur</Text></TouchableOpacity>
+            }
+            
+          </View>
+
+          {personToMap.map((person) => {
+     
+            return (
+              <View key={person.id} style={[styles.flex, styles.person]}>
+                <Image
+                  style={styles.profilePic}
+                  source={person.img}
+                  resizeMode="cover"
+                />
+                
+                <View>
+                  <Text style={styles.bold}>{person.name}</Text>
+                  <View style={[styles.flex, {alignItems: "center", marginTop: 5}]}>
+                    <Text style={styles.index}>Jaune</Text>
+                    <Text style={styles.handicap}>Index: {person.index}</Text>
+                  </View>
+                </View>
+                   <SelectCountry
+                      style={styles.dropdown}
+                      selectedTextStyle={styles.selectedTextStyle}
+                      placeholderStyle={styles.placeholderStyle}
+                      imageStyle={styles.imageStyle}
+                      inputSearchStyle={styles.inputSearchStyle}
+                      iconStyle={styles.iconStyle}
+                      maxHeight={200}
+                      data={[{id:"1", name:'Désinscrire'}]}
+                      valueField="id"
+                      labelField="name"
+                      imageField="img"
+                      placeholder=''
+                      onChange={item => {
+                         setPlayers(players.filter(item => item !== person.name))
+                      }}
+                      renderRightIcon={() => (
+                        <MaterialCommunityIcons name="dots-vertical" style={styles.more} />
+                        )}
+                 />
+              </View>
+            )
+          })}
+
+      </View>}
+
+         <View style={[styles.timing, styles.line]}>
 
             <Calendar onSelectDate={setSelectedDate} selected={selectedDate} />
 
             {selectedDate == '' ? <></> : <Hours setSelectedHour={setSelectedHour} selectedHour={selectedHour} />}
 
-        </View>}
+        </View>
         
-        {selectedHour == '' ? <></> : <View style={[styles.players, styles.line]}>
-          
-            
-            <View style={styles.playersTitle}>
-              <View>
-                  <Text style={[styles.bold]}>
-                    Partenaires
-                  </Text>
-                  <Text style={[styles.thin]}>
-                    Jusqu'à 3 joueurs
-                  </Text>
-              </View>
-              {players.length == 3 ? <></> : 
-              <TouchableOpacity style={styles.addPlayer} onPress={() => navigation.navigate('ChoosePlayer', {friendType: 'Friends'}) }><Text>Ajouter un joueur</Text></TouchableOpacity>
-              }
-              
-            </View>
-
-            {personToMap.map((person) => {
-       
-              return (
-                <View key={person.id} style={[styles.flex, styles.person]}>
-                  <Image
-                    style={styles.profilePic}
-                    source={person.img}
-                    resizeMode="cover"
-                  />
-                  
-                  <View>
-                    <Text style={styles.bold}>{person.name}</Text>
-                    <View style={[styles.flex, {alignItems: "center", marginTop: 5}]}>
-                      <Text style={styles.index}>Jaune</Text>
-                      <Text style={styles.handicap}>Index: {person.index}</Text>
-                    </View>
-                  </View>
-                     <SelectCountry
-                        style={styles.dropdown}
-                        selectedTextStyle={styles.selectedTextStyle}
-                        placeholderStyle={styles.placeholderStyle}
-                        imageStyle={styles.imageStyle}
-                        inputSearchStyle={styles.inputSearchStyle}
-                        iconStyle={styles.iconStyle}
-                        maxHeight={200}
-                        data={[{id:"1", name:'Désinscrire'}]}
-                        valueField="id"
-                        labelField="name"
-                        imageField="img"
-                        placeholder=''
-                        onChange={item => {
-                           setPlayers(players.filter(item => item !== person.name))
-                        }}
-                        renderRightIcon={() => (
-                          <MaterialCommunityIcons name="dots-vertical" style={styles.more} />
-                          )}
-                   />
-                </View>
-              )
-            })}
-
-        </View>}
 
     </View>
     </ScrollView>
@@ -264,7 +265,7 @@ const styles = StyleSheet.create({
     display: "flex",
     alignItems: "center",
     justifyContent: "space-around",
-    flexDirection: 'row'
+    flexDirection: 'row',
   },
   approve: {
     marginBottom: 10,
@@ -281,7 +282,8 @@ const styles = StyleSheet.create({
     display: "flex",
     alignItems: "center",
     justifyContent: "center",
-    borderWidth: 2
+    borderWidth: 2,
+    backgroundColor: '#faf8f7'
   },
   cancelIcon:{
     fontSize: 30

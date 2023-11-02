@@ -30,7 +30,7 @@ const Calendar = ({ onSelectDate, selected }) => {
   return (
     <>
       <View>
-        <Text style={styles.title}>Sélectionner une date</Text>
+        <Text style={styles.title}>Date & Heure</Text>
       </View>
       <View style={styles.dateSection}>
         <View style={styles.scroll}>
@@ -110,12 +110,7 @@ const Date = ({ date, onSelectDate, selected }) => {
   
     return (
       <>
-        <View style={styles.HourSection}>
-          <View style={styles.scroll}>
-            <ScrollView
-              onScroll={(e) => setScrollPosition(e.nativeEvent.contentOffset.x)}
-              scrollEventThrottle={16}
-            >
+        <View style={[styles.HourSection, selectedHour == '' ? {paddingBottom: 50} : {paddingBottom: 0}]}>
               {hours.map((hour, index) => (
                 <Hour
                   key={index}
@@ -123,43 +118,25 @@ const Date = ({ date, onSelectDate, selected }) => {
                   setHours={setHours}
                   selectedHour={selectedHour}
                   setSelectedHour={setSelectedHour}
+                  index={index}
                 />
               ))}
-            </ScrollView>
-          </View>
         </View>
       </>
     )
   }
 
 
-  const Hour = ({ hour, setSelectedHour, selectedHour, setHours }) => {
+  const Hour = ({ hour, setSelectedHour, selectedHour, setHours, index }) => {
 
     const {height, width, scale, fontScale} = useWindowDimensions();
 
        return (
         <>
-          <View style={selectedHour == hour ? '' : styles.line} />
-          <TouchableOpacity
-            onPress={() => (setSelectedHour(hour), setHours([hour]))}
-            style={[styles.hour, selectedHour === hour]}
-          >
-            <Text
-              style={[styles.medium, selectedHour === hour]}
-            >
-              {hour}
-            </Text>
-            <View style={styles.iconContainer}>
-                <MaterialCommunityIcons style={styles.Icon} name='account' />
-                <MaterialCommunityIcons style={styles.Icon} name='account' />
-                <MaterialCommunityIcons style={styles.Icon} name='account' />
-                <MaterialCommunityIcons style={styles.Icon} name='account' />
-            </View>
-            <Text
-              style={[styles.big]}
-            >
-              70€
-            </Text>
+          <TouchableOpacity onPress={() => (setSelectedHour(hour), setHours([hour]))} style={[styles.hour]}>
+  
+            <Text style={[styles.medium, selectedHour === hour]}> {hour} </Text>
+
           </TouchableOpacity>
       </>
     )
@@ -204,31 +181,29 @@ const styles = StyleSheet.create({
 
   HourSection: {
     width: '100%',
-
-    maxHeight: 300
-  },
-  hour:{
-    paddingVertical: 20,
+    marginTop: 20,
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'space-around',
     flexDirection: 'row',
+    flexWrap: 'wrap',
+    columnGap: 20,
+    rowGap: 20
+  },
+  hour:{
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    flexDirection: 'row',
+    borderWidth: 1,
+    borderColor: 'grey',
+    paddingHorizontal: 5,
+    paddingTop: 8,
+    paddingBottom: 5,
+    borderRadius: 10
   },
   line: {
     borderWidth: 1,
     borderColor: '#eee'
   },
-  iconContainer: {
-    display: 'flex',
-    flexDirection: 'row',
-    justifyContent: 'center',
-    alignItems: 'center',
-    height: 20,
-    marginTop: -2,
-  },
-  Icon:{
-    fontSize: 20,
-    lineHeight: 20,
-    marginRight: 1
-  }
 })

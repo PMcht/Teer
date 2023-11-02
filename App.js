@@ -20,6 +20,7 @@ import GolfSummary from './pages/Parcours/GolfSummary';
 import { GolfList } from './pages/GolfList';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { DepartSums } from './pages/Home/DepartSummary';
+import ScoreSetup from './pages/ScoreCard/ScoreSetup';
 
 
 export const config = {
@@ -257,10 +258,34 @@ export function NavParcours({players, setPlayers, golf, setGolf, selectedDate, s
 
 
               <Stack.Screen
+                name="ScoreSetup"
+                options={{
+                  headerShown:true,
+                  headerTitle:'Nouvelle carte de score',
+                  headerStyle: {
+                    backgroundColor: '#faf8f7',
+                  },
+                  transitionSpec: {
+                    open: config,
+                    close: config
+                  },
+                  cardStyleInterpolator: CardStyleInterpolators.forHorizontalIOS,
+                }}
+                  >
+                  {(props) => (
+                    <ScoreSetup {...props} players={players} setPlayers={setPlayers} golf={golf} setGolf={setGolf} selectedDate={selectedDate} setSelectedDate={setSelectedDate} selectedHour={selectedHour} setSelectedHour={setSelectedHour} />
+                  )}
+              </Stack.Screen>
+
+
+              <Stack.Screen
                 name="DepartResa"
                 options={{
                   headerShown:true,
                   headerTitle:'Nouveau Départ',
+                  headerStyle: {
+                    backgroundColor: '#faf8f7',
+                  },
                   transitionSpec: {
                     open: config,
                     close: config
@@ -278,6 +303,9 @@ export function NavParcours({players, setPlayers, golf, setGolf, selectedDate, s
                 options={{
                   headerShown:true,
                   headerTitle:'Réserver un cours',
+                  headerStyle: {
+                    backgroundColor: '#faf8f7',
+                  },
                   transitionSpec: {
                     open: config,
                     close: config

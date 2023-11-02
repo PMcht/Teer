@@ -65,7 +65,7 @@ export default function CoursResa({navigation, route, golf, players, setPlayers,
   return (
     <View style={[styles.scrollView , {flex: 1}]}>
     <ScrollView>
-    <View style={{minHeight: height, width: width, paddingVertical: 30, paddingHorizontal: 20, backgroundColor: "#fff"}}>
+    <View style={{minHeight: height, width: width, paddingVertical: 30, paddingHorizontal: 20, backgroundColor: "#faf8f7"}}>
 
       
 
@@ -347,7 +347,8 @@ const styles = StyleSheet.create({
     display: "flex",
     alignItems: "center",
     justifyContent: "space-around",
-    flexDirection: 'row'
+    flexDirection: 'row',
+    backgroundColor: '#faf8f7'
   },
   approve: {
     marginBottom: 10,
