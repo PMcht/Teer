@@ -11,6 +11,8 @@ import { useWindowDimensions } from 'react-native'
 import { TouchableOpacity } from 'react-native'
 import { Toggle } from '../../components/Toggle'
 
+
+
 export default function ScoreSetup({navigation, route, golf, players, setPlayers, selectedDate, setSelectedDate, selectedHour, setSelectedHour}) {
 
   // Localisation
@@ -129,7 +131,7 @@ export default function ScoreSetup({navigation, route, golf, players, setPlayers
                       <Text style={styles.toggleTitle}>Stableford</Text>
                       <Text style={styles.toggleDesc}>Prioriser la formule de jeu avec coups remis</Text>
                     </View>
-                    <Toggle />
+                    <Toggle style={styles.toggle} />
                   </View>
 
                   <View style={styles.toggleContainer}>
@@ -161,7 +163,7 @@ export default function ScoreSetup({navigation, route, golf, players, setPlayers
                 <MaterialCommunityIcons style={[styles.cancelIcon, {color: "#ba2504"}]} name='chevron-left' />
             </Pressable>
 
-            <Pressable onPress={() => {  }} style={[styles.approve,  { backgroundColor: "#2ba9bc" }]}>
+            <Pressable onPress={() => { navigation.navigate('ScoreNav') }} style={[styles.approve,  { backgroundColor: "#2ba9bc" }]}>
                 <Text style={[styles.bold, {color: "#fff"}]}>Lancer la Partie</Text>
             </Pressable>
 
@@ -175,7 +177,7 @@ export default function ScoreSetup({navigation, route, golf, players, setPlayers
 const styles = StyleSheet.create({
     mainContainer: {
         backgroundColor: "#faf8f7",
-        paddingTop:StatusBar.currentHeight + 30
+        paddingTop:StatusBar.currentHeight
       },
     borderBottom: {
         borderBottomWidth: 1,

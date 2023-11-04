@@ -73,7 +73,7 @@ export function DepartSums({navigation, route, players, setPlayers}) {
                   </Text>
               </View>
               {players.length >= 3 ? <></> : 
-              <TouchableOpacity style={styles.addPlayer} onPress={() => {console.log(players); navigation.navigate('ChoosePlayer', {friendType: 'Friends'})}}><Text>Ajouter un joueur</Text></TouchableOpacity>
+              <TouchableOpacity style={styles.addPlayer} onPress={() => {navigation.navigate('ChoosePlayer', {friendType: 'Friends'})}}><Text>Ajouter un joueur</Text></TouchableOpacity>
               }
               
             </View>

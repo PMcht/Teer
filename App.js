@@ -1,6 +1,9 @@
+import 'react-native-gesture-handler'
+
+
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { NavigationContainer, useNavigation } from '@react-navigation/native';
-import { StatusBar } from 'react-native'
+import { AppRegistry, StatusBar } from 'react-native'
 import { SafeAreaView } from 'react-native';
 import { useWindowDimensions } from 'react-native';
 import { StyleSheet, Text, View } from 'react-native';
@@ -21,6 +24,9 @@ import { GolfList } from './pages/GolfList';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { DepartSums } from './pages/Home/DepartSummary';
 import ScoreSetup from './pages/ScoreCard/ScoreSetup';
+import ScoreSummary from './pages/ScoreCard/ScoreSummary';
+import ScoreHole from './pages/ScoreCard/ScoreHole';
+import ScoreNav from './pages/ScoreCard/ScoreNav';
 
 
 export const config = {
@@ -45,11 +51,6 @@ export default function App() {
 
   const {height, width, scale, fontScale} = useWindowDimensions();
 
-  const [players, setPlayers] = useState('')
-  const [golf, setGolf] = useState('')
-  const [selectedDate, setSelectedDate] = useState('')
-  const [selectedHour, setSelectedHour] = useState('')
-
 
   return (
     
@@ -68,7 +69,7 @@ export default function App() {
           }}
             >
             {(props) => (
-              <NavHome players={players} setPlayers={setPlayers} golf={golf} setGolf={setGolf} selectedDate={selectedDate} setSelectedDate={setSelectedDate} selectedHour={selectedHour} setSelectedHour={setSelectedHour} />
+              <NavHome  />
             )}
         </Tab.Screen>
 
@@ -99,7 +100,7 @@ export default function App() {
           }}
             >
             {(props) => (
-              <NavParcours players={players} setPlayers={setPlayers} golf={golf} setGolf={setGolf} selectedDate={selectedDate} setSelectedDate={setSelectedDate} selectedHour={selectedHour} setSelectedHour={setSelectedHour} />
+              <NavGolfList />
             )}
         </Tab.Screen>
 
@@ -148,8 +149,12 @@ export default function App() {
 
 
 
-export function NavHome({players, setPlayers, golf, setGolf, selectedDate, setSelectedDate, selectedHour, setSelectedHour}) {
+export function NavHome() {
 
+  const [players, setPlayers] = useState('')
+  const [golf, setGolf] = useState('')
+  const [selectedDate, setSelectedDate] = useState('')
+  const [selectedHour, setSelectedHour] = useState('')
 
   const Stack = createStackNavigator();
 
@@ -231,8 +236,12 @@ export function NavHome({players, setPlayers, golf, setGolf, selectedDate, setSe
   );
 }
 
-export function NavParcours({players, setPlayers, golf, setGolf, selectedDate, setSelectedDate, selectedHour, setSelectedHour}) {
+export function NavGolfList() {
 
+  const [players, setPlayers] = useState('')
+  const [golf, setGolf] = useState('')
+  const [selectedDate, setSelectedDate] = useState('')
+  const [selectedHour, setSelectedHour] = useState('')
 
   const Stack = createStackNavigator();
 
@@ -274,6 +283,19 @@ export function NavParcours({players, setPlayers, golf, setGolf, selectedDate, s
                   >
                   {(props) => (
                     <ScoreSetup {...props} players={players} setPlayers={setPlayers} golf={golf} setGolf={setGolf} selectedDate={selectedDate} setSelectedDate={setSelectedDate} selectedHour={selectedHour} setSelectedHour={setSelectedHour} />
+                  )}
+              </Stack.Screen>
+
+              <Stack.Screen
+                name="ScoreNav"
+                options={{
+                  headerShown:false,
+                  cardStyleInterpolator: forFade,
+                  gestureEnabled: false
+                }}
+                  >
+                  {(props) => (
+                    <ScoreNav {...props} players={players} setPlayers={setPlayers} golf={golf} setGolf={setGolf} selectedDate={selectedDate} setSelectedDate={setSelectedDate} selectedHour={selectedHour} setSelectedHour={setSelectedHour} />
                   )}
               </Stack.Screen>
 
