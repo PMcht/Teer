@@ -3,7 +3,7 @@ import { Button, View, Text, SafeAreaView, ScrollView, StyleSheet, TextInput, us
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { persons } from "../../utils/json/persons";
 import { departsList, sortDepart } from "../../utils/json/departsList";
-import { GolfAttributes } from "../../utils/Lists/Golfs";
+import { GolfAttributes } from "../../utils/json/Golfs";
 import { SelectCountry } from "react-native-element-dropdown";
 
 import Calendar, { Hours } from "../../components/DatePicker";

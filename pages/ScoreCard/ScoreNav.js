@@ -1,52 +1,27 @@
 import { StyleSheet, Text, View } from 'react-native'
 import React, { useState } from 'react'
-import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
 import Header from '../../components/Header';
 import ScoreSummary from './ScoreSummary';
 import ScoreHole from './ScoreHole';
 import ScoreHoleInfo from './ScoreHoleInfo';
 import { StatusBar } from 'react-native';
 import { holeslist } from '../../utils/json/holesList';
-import HoleSelect from './HoleSelect';
-import { createDrawerNavigator } from '@react-navigation/drawer';
+import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
+import { scoreTemp } from '../../utils/json/scoreTemp';
 
 
 
 
-export default function ScoreNav() {
-
-  const Drawer = createDrawerNavigator();
+export default function ScoreNav({players}) {
   
   const [hole, setHole] = useState(holeslist[0])
+  const [shot,setShot] = useState(0)
+
+  const Tab = createMaterialTopTabNavigator();
+
+
   
   return (
-    <Drawer.Navigator>
-
-      <Drawer.Screen name="Home">
-          {(props) => (
-              <ScoreSlideNav {...props} setHole={setHole} hole={hole} />
-              )}
-      </Drawer.Screen>
-      <Drawer.Screen name="HoleSelect" >
-          {(props) => (
-              <HoleSelect {...props} setHole={setHole} />
-              )}
-      </Drawer.Screen>
-
-    </Drawer.Navigator>
-  )
-
-}
-
-
-
-export function ScoreSlideNav({setHole, hole}) {
-
-    const Tab = createMaterialTopTabNavigator();
-
-  return (
-
-
     <View style={[styles.mainContainer, {flex: 1}]}>
     
         <Header />
@@ -55,27 +30,29 @@ export function ScoreSlideNav({setHole, hole}) {
             
             <Tab.Screen name="Parcours">
                 {(props) => (
-                    <ScoreSummary {...props} setHole={setHole} />
+                    <ScoreSummary {...props} setHole={setHole}/>
                   )}
             </Tab.Screen>
 
             <Tab.Screen name="Trou">
                 {(props) => (
-                    <ScoreHole {...props} hole={hole} />
+                    <ScoreHole {...props} hole={hole} setHole={setHole} shot={shot} setShot={setShot} />
                   )}
             </Tab.Screen>
 
             <Tab.Screen name="GPS">
                 {(props) => (
-                    <ScoreHoleInfo {...props} hole={hole} />
+                    <ScoreHoleInfo {...props} hole={hole} setHole={setHole} />
                   )}
             </Tab.Screen>
         </Tab.Navigator>
     
     </View>
-
   )
+
 }
+
+
 
 const styles = StyleSheet.create({
     mainContainer: {

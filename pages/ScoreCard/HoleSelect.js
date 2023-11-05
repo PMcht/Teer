@@ -4,18 +4,18 @@ import { holeslist } from '../../utils/json/holesList'
 import { ScrollView } from 'react-native'
 import { TouchableOpacity } from 'react-native'
 
-export default function HoleSelect({hole}) {
+export default function HoleSelect({setHole, toClose, setShot}) {
   return (
         <View style={[styles.mainContainer, {flex: 1}]}>
     
-          <ScrollView>
+            <Text style={styles.textCenter}>Sélectionner un trou</Text>
     
               <View style={styles.holeNumbers}>
     
               {holeslist.map((hole) => {
     
                   return (
-                      <TouchableOpacity key={hole.id} style={ [styles.hole] } onPress={() => (setHole(holeslist[hole.holeNB -1]), navigation.navigate('Trou'))}>
+                      <TouchableOpacity key={hole.id} style={ [styles.hole] } onPress={() => (setShot(0), setHole(holeslist[hole.holeNB - 1]), toClose())}>
     
                           <Text style={styles.holeNB}>{hole.holeNB}</Text>
                         
@@ -24,24 +24,18 @@ export default function HoleSelect({hole}) {
                   })}
     
               </View>
-    
-          </ScrollView>
-    
         </View>
   )
 }
 
 const styles = StyleSheet.create({
-    mainContainer: {
-        backgroundColor: "#faf8f7",
+  
+      textCenter: {
+        textAlign: 'center',
+        fontSize: 25,
+        fontWeight: 'bold'
       },
-      borderBottom: {
-          borderBottomWidth: 1,
-          borderColor: '#e9ebf0',
-          marginBottom: 20,
-          paddingBottom: 20,
-      },
-    
+
       holeNumbers: {
         display: 'flex',
         justifyContent: 'center',
@@ -51,10 +45,6 @@ const styles = StyleSheet.create({
         width: '90%',
         marginHorizontal: '5%',
         gap: 15,
-        borderTopWidth: 1,
-        borderBottomWidth: 1,
-        borderColor: '#e9ebf0',
-        marginVertical: 20,
         paddingVertical: 20,
       },
       hole: {

@@ -3,6 +3,7 @@ import React from 'react'
 import Header from '../../components/Header'
 import { holeslist } from '../../utils/json/holesList'
 import { Button } from 'react-native'
+import BottomDrawer from '../../components/BottomDrawer'
 
 export default function ScoreSummary({navigation, route, setHole}) {
 
@@ -13,12 +14,7 @@ export default function ScoreSummary({navigation, route, setHole}) {
 
       <ScrollView>
 
-          <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-          <Button
-            onPress={() => navigation.navigate('HoleSelect')}
-            title="Go to notifications"
-          />
-        </View>
+
 
       </ScrollView>
 
@@ -37,5 +33,34 @@ const styles = StyleSheet.create({
       paddingBottom: 20,
   },
 
-
+  holeNumbers: {
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    width: '90%',
+    marginHorizontal: '5%',
+    gap: 15,
+    borderTopWidth: 1,
+    borderBottomWidth: 1,
+    borderColor: '#e9ebf0',
+    marginVertical: 20,
+    paddingVertical: 20,
+  },
+  hole: {
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: '#2ba9bc',
+    height: 50,
+    width: 50,
+    borderRadius: 50
+  },
+  holeNB: {
+    fontSize: 25,
+    marginBottom: 3,
+    color: '#fff',
+    fontWeight: 'bold'
+  }
 })

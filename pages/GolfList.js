@@ -1,6 +1,6 @@
 import React, { Component, useState } from "react";
 import { Button, View, Text, SafeAreaView, ScrollView, StyleSheet, TextInput, useWindowDimensions, TouchableOpacity, Image, Easing } from "react-native";
-import { GolfAttributes } from "../utils/Lists/Golfs";
+import { GolfAttributes } from "../utils/json/Golfs";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import Header from "../components/Header";
 import { useNavigation } from "@react-navigation/native";
