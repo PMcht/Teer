@@ -15,7 +15,6 @@ import { scoreTemp } from '../../utils/json/scoreTemp';
 export default function ScoreNav({players}) {
   
   const [hole, setHole] = useState(holeslist[0])
-  const [shot,setShot] = useState(0)
 
   const Tab = createMaterialTopTabNavigator();
 
@@ -26,7 +25,7 @@ export default function ScoreNav({players}) {
     
         <Header />
     
-        <Tab.Navigator screenOptions={{tabBarStyle: styles.topBar, tabBarIndicatorStyle: {backgroundColor: '#2ba9bc', marginTop: 10}, tabBarActiveTintColor: '#2ba9bc', tabBarInactiveTintColor: 'gray'}}>
+        <Tab.Navigator initialRouteName='Trou' screenOptions={{tabBarStyle: styles.topBar, tabBarIndicatorStyle: {backgroundColor: '#2ba9bc', marginTop: 10}, tabBarActiveTintColor: '#2ba9bc', tabBarInactiveTintColor: 'gray'}}>
             
             <Tab.Screen name="Parcours">
                 {(props) => (
@@ -36,7 +35,7 @@ export default function ScoreNav({players}) {
 
             <Tab.Screen name="Trou">
                 {(props) => (
-                    <ScoreHole {...props} hole={hole} setHole={setHole} shot={shot} setShot={setShot} />
+                    <ScoreHole {...props} hole={hole} setHole={setHole} />
                   )}
             </Tab.Screen>
 

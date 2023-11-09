@@ -4,15 +4,7 @@ import BottomDrawer from '../../components/BottomDrawer';
 import Accordian from '../../components/Accordion';
 import { scoreTemp } from '../../utils/json/scoreTemp';
 
-export default function ScoreHole({navigation, route, hole, setHole, shot, setShot}) {
-
-    const test = [
-      {key:'Chicken Biryani', value:false},
-      {key:'Mutton Biryani', value:false},
-      {key:'Prawns Biryani', value:false},
-    ]
-
-    
+export default function ScoreHole({navigation, route, hole, setHole}) {
 
   return (
 
@@ -62,25 +54,19 @@ export default function ScoreHole({navigation, route, hole, setHole, shot, setSh
 
         <ScrollView>
 
-          <TouchableOpacity onPress={() => setShot(shot +1)}>
-            <Text>Ajouter un coup</Text>
-          </TouchableOpacity>
-
-          <Text>Nombre de coup : {shot}</Text>
-
-          <TouchableOpacity onPress={() => console.log(scoreTemp)}>
-            <Text>Console</Text>
-          </TouchableOpacity>
-
           <Accordian  
                 title = 'test'
-                data = {test}
+                hole={hole}
             />
+
+<TouchableOpacity onPress={() => console.log(holeData)}>
+            <Text>Console</Text>
+          </TouchableOpacity>
 
         </ScrollView>
 
 
-        <BottomDrawer setHole={setHole} hole={hole} setShot={setShot} />
+        <BottomDrawer setHole={setHole} hole={hole} />
 
   
 
