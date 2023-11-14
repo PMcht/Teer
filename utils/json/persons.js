@@ -1,8 +1,8 @@
 export const persons = [
     {
         id: 0,
-        name: 'Valentin',
-        img: require('../../assets/Booking/Resa/Persons/Valentin.jpg'),
+        name: 'Paul',
+        img: require('../../assets/Booking/Resa/Persons/Paul.jpg'),
         type: 'Friends',
         index: 10
     },
@@ -38,4 +38,14 @@ export const persons = [
         type: 'Professor',
         index: 1
     },
+
+    {
+        id: 5,
+        name: 'Valentin',
+        img: require('../../assets/Booking/Resa/Persons/Valentin.jpg'),
+        type: 'Friends',
+        index: 10
+    },
+
+
   ]

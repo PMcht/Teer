@@ -1,8 +1,8 @@
 export let scoreTemp = [
     {
         hole: 1,
-        strokes: 6,
-        putts: 3,
+        strokes: 0,
+        putts: 0,
         gir: 'false',
         bunker: 'false',
         drop: 'false'

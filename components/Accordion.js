@@ -1,34 +1,32 @@
-import React, {Component, useState} from 'react';
+import React, {Component, useState, useEffect} from 'react';
 import { View, TouchableOpacity, Text, FlatList, StyleSheet, LayoutAnimation, Platform, UIManager, Image} from "react-native";
 import { persons } from '../utils/json/persons';
 import { scoreTemp } from '../utils/json/scoreTemp';
 
-export default function Accordian({hole}) {
+export default function Accordian({hole, holeData, gamer}) {
 
-  const holeData = scoreTemp.filter(holeT => holeT.hole == hole.holeNB )
+  const [shot,setShot] = useState(holeData.strokes)
+  const [expand, setExpand] = useState(false)
+  
+  useEffect(() => {
+    setShot(holeData.strokes)
+  }, [hole])
 
-  const [shot,setShot] = useState(holeData[0].strokes)
+  LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut);
 
-    const [expand, setExpand] = useState(false)
-
-        if (Platform.OS === 'android') {
-            UIManager.setLayoutAnimationEnabledExperimental(true);
-        }
-
-          toggleExpand=()=>{
-            LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut);
-            setExpand(!expand)
-          }
+      if (Platform.OS === 'android') {
+          UIManager.setLayoutAnimationEnabledExperimental(true);
+      }
 
     return (
-       <TouchableOpacity style={styles.accordion} onPress={()=>this.toggleExpand()}>
-            <TouchableOpacity style={styles.mainVisible} onPress={()=>this.toggleExpand()}>
+       <TouchableOpacity style={styles.accordion} key={gamer.id} onPress={()=>setExpand(!expand)}>
+            <TouchableOpacity style={styles.mainVisible} onPress={()=>setExpand(!expand)}>
 
-                <Image source={persons[0].img}  style={styles.profilePic} />
+                <Image source={gamer.img}  style={styles.profilePic} />
 
                 <View style={styles.flexVertical}>
-                  <Text style={styles.name}>{persons[0].name}</Text>
-                  <Text style={styles.index}>Index : {persons[0].index}</Text>
+                  <Text style={styles.name}>{gamer.name}</Text>
+                  <Text style={styles.index}>Index : {gamer.index}</Text>
                 </View>
                 
             </TouchableOpacity>
@@ -39,7 +37,7 @@ export default function Accordian({hole}) {
 
                 <View style={styles.score}>
 
-                  <TouchableOpacity style={[styles.plusMinus, {borderColor: 'green'}]} onPress={() => setShot(shot-1)}>
+                  <TouchableOpacity style={[styles.plusMinus, {borderColor: 'green'}]} onPress={() => { setShot(shot -1), holeData.strokes = shot -1}}>
                     <Text style={[styles.plusMinusText, {color: 'green'}]}>-</Text>
                   </TouchableOpacity>
 
@@ -51,7 +49,7 @@ export default function Accordian({hole}) {
                   </View>
 
                   
-                  <TouchableOpacity style={[styles.plusMinus, {borderColor: 'red'}]} onPress={() => setShot(shot+1)}>
+                  <TouchableOpacity style={[styles.plusMinus, {borderColor: 'red'}]} onPress={() => { setShot(shot +1), holeData.strokes = shot +1}}>
                     <Text style={[styles.plusMinusText, {color: 'red'}]}>+</Text>
                   </TouchableOpacity>
 

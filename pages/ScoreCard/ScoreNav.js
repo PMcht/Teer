@@ -35,7 +35,7 @@ export default function ScoreNav({players}) {
 
             <Tab.Screen name="Trou">
                 {(props) => (
-                    <ScoreHole {...props} hole={hole} setHole={setHole} />
+                    <ScoreHole {...props} hole={hole} setHole={setHole} players={players} />
                   )}
             </Tab.Screen>
 

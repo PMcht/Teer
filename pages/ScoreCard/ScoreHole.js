@@ -1,10 +1,17 @@
 import { Dimensions, ScrollView, StatusBar, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import BottomDrawer from '../../components/BottomDrawer';
 import Accordian from '../../components/Accordion';
 import { scoreTemp } from '../../utils/json/scoreTemp';
+import { persons } from '../../utils/json/persons';
 
-export default function ScoreHole({navigation, route, hole, setHole}) {
+export default function ScoreHole({navigation, route, hole, setHole, players}) {
+
+  
+  const holeData = scoreTemp[hole.holeNB - 1]
+
+  let personToMap = persons.filter(({name}) => players.includes(name))
+
 
   return (
 
@@ -54,19 +61,38 @@ export default function ScoreHole({navigation, route, hole, setHole}) {
 
         <ScrollView>
 
-          <Accordian  
-                title = 'test'
-                hole={hole}
-            />
 
-<TouchableOpacity onPress={() => console.log(holeData)}>
+                      
+        <Accordian
+              gamer={persons[0]}
+              holeData={holeData}
+              hole={hole}
+          />
+
+          {personToMap.map((item) => {
+
+          return (
+            <Accordian
+              key={item.id}
+              gamer={item}
+              hole={hole}
+              holeData={holeData}
+          />
+          )
+          })}
+
+
+
+
+
+<TouchableOpacity onPress={() => console.log(scoreTemp)}>
             <Text>Console</Text>
           </TouchableOpacity>
 
         </ScrollView>
 
 
-        <BottomDrawer setHole={setHole} hole={hole} />
+        <BottomDrawer setHole={setHole} hole={hole} holeData={holeData} />
 
   
 
