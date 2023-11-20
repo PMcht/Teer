@@ -4,7 +4,7 @@ import { holeslist } from '../../utils/json/holesList'
 import { ScrollView } from 'react-native'
 import { TouchableOpacity } from 'react-native'
 
-export default function HoleSelect({setHole, toClose, holeData}) {
+export default function HoleSelect({setHole, toClose}) {
   
   return (
         <View style={[styles.mainContainer, {flex: 1}]}>

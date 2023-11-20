@@ -7,10 +7,10 @@ import { persons } from '../../utils/json/persons';
 
 export default function ScoreHole({navigation, route, hole, setHole, players}) {
 
-  
-  const holeData = scoreTemp[hole.holeNB - 1]
 
   let personToMap = persons.filter(({name}) => players.includes(name))
+
+  console.log(scoreTemp)
 
 
   return (
@@ -62,21 +62,16 @@ export default function ScoreHole({navigation, route, hole, setHole, players}) {
         <ScrollView>
 
 
-                      
-        <Accordian
-              gamer={persons[0]}
-              holeData={holeData}
-              hole={hole}
-          />
-
           {personToMap.map((item) => {
+
+     
 
           return (
             <Accordian
               key={item.id}
               gamer={item}
               hole={hole}
-              holeData={holeData}
+              holeData={scoreTemp[item.name]}
           />
           )
           })}
@@ -92,7 +87,7 @@ export default function ScoreHole({navigation, route, hole, setHole, players}) {
         </ScrollView>
 
 
-        <BottomDrawer setHole={setHole} hole={hole} holeData={holeData} />
+        <BottomDrawer setHole={setHole} hole={hole}/>
 
   
 

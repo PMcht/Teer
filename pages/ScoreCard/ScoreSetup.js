@@ -163,7 +163,7 @@ export default function ScoreSetup({navigation, route, golf, players, setPlayers
                 <MaterialCommunityIcons style={[styles.cancelIcon, {color: "#ba2504"}]} name='chevron-left' />
             </Pressable>
 
-            <Pressable onPress={() => {  navigation.navigate('ScoreNav') }} style={[styles.approve,  { backgroundColor: "#2ba9bc" }]}>
+            <Pressable onPress={() => { navigation.navigate('ScoreNav'), setPlayers((prev) => prev + 'Paul')  }} style={[styles.approve,  { backgroundColor: "#2ba9bc" }]}>
                 <Text style={[styles.bold, {color: "#fff"}]}>Lancer la Partie</Text>
             </Pressable>
 

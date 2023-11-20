@@ -5,11 +5,13 @@ import { scoreTemp } from '../utils/json/scoreTemp';
 
 export default function Accordian({hole, holeData, gamer}) {
 
-  const [shot,setShot] = useState(holeData.strokes)
+  const holeStrokes = holeData[hole.holeNB - 1]
+
+  const [shot,setShot] = useState(holeStrokes.strokes)
   const [expand, setExpand] = useState(false)
   
   useEffect(() => {
-    setShot(holeData.strokes)
+    setShot(holeStrokes.strokes)
   }, [hole])
 
   LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut);
@@ -37,7 +39,7 @@ export default function Accordian({hole, holeData, gamer}) {
 
                 <View style={styles.score}>
 
-                  <TouchableOpacity style={[styles.plusMinus, {borderColor: 'green'}]} onPress={() => { setShot(shot -1), holeData.strokes = shot -1}}>
+                  <TouchableOpacity style={[styles.plusMinus, {borderColor: 'green'}]} onPress={() => { setShot(shot -1), holeStrokes.strokes = shot -1}}>
                     <Text style={[styles.plusMinusText, {color: 'green'}]}>-</Text>
                   </TouchableOpacity>
 
@@ -49,7 +51,7 @@ export default function Accordian({hole, holeData, gamer}) {
                   </View>
 
                   
-                  <TouchableOpacity style={[styles.plusMinus, {borderColor: 'red'}]} onPress={() => { setShot(shot +1), holeData.strokes = shot +1}}>
+                  <TouchableOpacity style={[styles.plusMinus, {borderColor: 'red'}]} onPress={() => { setShot(shot +1), holeStrokes.strokes = shot +1}}>
                     <Text style={[styles.plusMinusText, {color: 'red'}]}>+</Text>
                   </TouchableOpacity>
 
@@ -106,7 +108,7 @@ const styles = StyleSheet.create({
     },
     name: {
       fontWeight: 'bold',
-      fontSize: 16
+      fontSize: 20
     },
     index: {
       paddingHorizontal: 10,

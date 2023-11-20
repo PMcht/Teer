@@ -5,7 +5,7 @@ import { holeslist } from '../utils/json/holesList';
 import HoleSelect from '../pages/ScoreCard/HoleSelect';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 
-export default function BottomDrawer({setHole, hole, holeData}) {
+export default function BottomDrawer({setHole, hole}) {
 
     // We need to get the height of the phone and use it relatively, 
     // This is because height of phones vary
@@ -42,7 +42,7 @@ export default function BottomDrawer({setHole, hole, holeData}) {
 
                         <View style={[styles.bottomSheet, { height: windowHeight * 0.5 }]}>
 
-                            <HoleSelect toClose={handleCloseBottomSheet} setHole={setHole} holeData={holeData} />
+                            <HoleSelect toClose={handleCloseBottomSheet} setHole={setHole} />
 
                             <TouchableOpacity style={styles.back} onPress={handleCloseBottomSheet}>
                                 <Text style={styles.backText}>Revenir en arrière</Text>
